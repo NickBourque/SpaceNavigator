@@ -18,7 +18,7 @@ namespace FirstConsoleAppDemo
             //Console.WriteLine(String.Format("Hello {0}!", input));
 
             Console.WriteLine("Hit any key...");
-            
+
 
             while (true)
             {
