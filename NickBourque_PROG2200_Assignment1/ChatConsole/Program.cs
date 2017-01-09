@@ -11,14 +11,16 @@ namespace ChatConsole
     {
         static void Main(string[] args)
         {
-            if(args.Length > 0 && args[0] == "-server")
-            {
-                Server server = new Server();
-            }
-            else
-            {
-                Client client = new Client();
-            }
+            //if(args.Length > 0 && args[0] == "-server")
+            //{
+            //    Server server = new Server();
+            //}
+            //else
+            //{
+            //    Client client = new Client();
+            //}
+            Server server = new Server();
+            server.connect();
             
             
         }//end Main
