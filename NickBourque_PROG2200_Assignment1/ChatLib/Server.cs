@@ -12,13 +12,11 @@ namespace ChatLib
     {
         
         public void connect() {
-
             Int32 port = 1234;
             IPAddress local = IPAddress.Parse("127.0.0.1");
             TcpListener listener = new TcpListener(local, port);
             listener.Start();
-
-        }
+        }//end method connect
         
     
 
