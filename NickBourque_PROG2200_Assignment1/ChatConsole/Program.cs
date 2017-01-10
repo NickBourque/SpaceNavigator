@@ -18,13 +18,6 @@ namespace ChatConsole
                 server.Connect();
                 Console.WriteLine("Client Connected!");
                 server.OpenStream();
-                Console.Read();
-            }
-            else
-            {
-                Client client = new Client();
-                client.Connect();
-                client.OpenStream();
 
                 while (true)
                 {
@@ -36,22 +29,58 @@ namespace ChatConsole
                         {
                             Console.Write(">>");
                             string message = Console.ReadLine();
-                            client.SendMessage(message);
+                            server.SendMessage(message);
+                        }
+
+                    }
+
+                    string serverIn = server.ReceiveMessage();
+
+                    if (serverIn != null)
+                    {
+                        Console.WriteLine(serverIn);
+                    }
+                }//end while loop
+
+            }
+            else
+            {
+                Client client = new Client();
+                bool conn = client.Connect();
+
+                if (conn)
+                {
+                    Console.WriteLine("Connected to Server!");
+                    client.OpenStream();
+
+                    while (true)
+                    {
+                        if (Console.KeyAvailable)
+                        {
+                            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                            if (keyInfo.Key == ConsoleKey.I)
+                            {
+                                Console.Write(">>");
+                                string message = Console.ReadLine();
+                                client.SendMessage(message);
+                            }
+
                         }
                         
-                    }
+                        string clientIn = client.ReceiveMessage();
 
-
-                    string incomming = client.ReceiveMessage();
-
-                    if (incomming != null)
-                    {
-                        Console.WriteLine("Server: " + incomming);
-                    }
-
+                        if (clientIn != null)
+                        {
+                            Console.WriteLine(clientIn);
+                        }
+                    }//end while loop
                 }
-
-                //Console.Read();
+                else {
+                    Console.WriteLine("There was a problem connecting to the server... Please try again later.");
+                    Console.Write("Press Enter to quit...");
+                    Console.Read();
+                }
             }
 
 

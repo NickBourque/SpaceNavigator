@@ -14,12 +14,19 @@ namespace ChatLib
         Byte[] data = null;
         //string message = null;
 
-        public void Connect() {
+        public bool Connect() {
 
             Int32 port = 1234;
             string server = "127.0.0.1";
-
-            client = new TcpClient(server, port);
+            try
+            {
+                client = new TcpClient(server, port);
+                return true;
+            }
+            catch(SocketException sockEx)
+            {
+                return false;
+            }
         }//end method Connect
 
         public void OpenStream()
@@ -47,20 +54,16 @@ namespace ChatLib
         {
             try
             {
-                //Console.WriteLine("1");
                 data = new Byte[256];
-                //Console.WriteLine("2");
                 string receivedData = String.Empty;
-                //Console.WriteLine("3");
                 if (stream.DataAvailable)
                 {
                     Int32 bytes = stream.Read(data, 0, data.Length);
-                    //Console.WriteLine("4");
                     receivedData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                     return receivedData;
                 }
             }
-            catch(Exception ex) { }
+            catch(Exception ex) { return null; }
             return null;
             
         }
