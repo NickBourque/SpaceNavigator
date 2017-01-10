@@ -33,7 +33,7 @@ namespace ChatLib
         public void OpenStream() {
             while (true)
             {
-                //data = null;
+                
 
                 // Get a stream object for reading and writing
                 stream = client.GetStream();
@@ -41,7 +41,7 @@ namespace ChatLib
                 int i;
 
                 // Loop to receive all the data sent by the client.
-                while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                while (stream.DataAvailable && (i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
                     // Translate data bytes to a ASCII string.
                     data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
@@ -58,6 +58,7 @@ namespace ChatLib
                     stream.Write(msg, 0, msg.Length);
                     Console.WriteLine("Sent: {0}", data);
                 }
+                
             }
 
         }//end method OpenStream

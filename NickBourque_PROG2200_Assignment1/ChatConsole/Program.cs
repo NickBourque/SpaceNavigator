@@ -25,7 +25,33 @@ namespace ChatConsole
                 Client client = new Client();
                 client.Connect();
                 client.OpenStream();
-                Console.Read();
+
+                while (true)
+                {
+                    if (Console.KeyAvailable)
+                    {
+                        ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                        if (keyInfo.Key == ConsoleKey.I)
+                        {
+                            Console.Write(">>");
+                            string message = Console.ReadLine();
+                            client.SendMessage(message);
+                        }
+                        
+                    }
+
+
+                    string incomming = client.ReceiveMessage();
+
+                    if (incomming != null)
+                    {
+                        Console.WriteLine("Server: " + incomming);
+                    }
+
+                }
+
+                //Console.Read();
             }
 
 
