@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatLib
 {
@@ -12,7 +8,6 @@ namespace ChatLib
         TcpClient client = null;
         NetworkStream stream = null;
         Byte[] data = null;
-        //string message = null;
 
         public bool Connect() {
 
@@ -42,6 +37,7 @@ namespace ChatLib
 
         public void SendMessage(string message)
         {
+            if(message == "quit") { Environment.Exit(0); }
             
             data = System.Text.Encoding.ASCII.GetBytes(message);
 
