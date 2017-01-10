@@ -10,18 +10,57 @@ namespace ChatLib
 {
     public class Server
     {
-        
-        public void connect() {
+        TcpListener listener = null;
+        TcpClient client = null;
+        NetworkStream stream = null;
+        string data = null;
+        Byte[] bytes = new Byte[256];
+
+
+        public void Connect() {
             Int32 port = 1234;
             IPAddress local = IPAddress.Parse("127.0.0.1");
-            TcpListener listener = new TcpListener(local, port);
+            listener = new TcpListener(local, port);
             listener.Start();
 
             while (true)
             {
-                TcpClient client = listener.AcceptTcpClient();
+                client = listener.AcceptTcpClient();
+                return;
             }
-        }//end method connect
+        }//end method Connect
+
+        public void OpenStream() {
+            while (true)
+            {
+                //data = null;
+
+                // Get a stream object for reading and writing
+                stream = client.GetStream();
+
+                int i;
+
+                // Loop to receive all the data sent by the client.
+                while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                {
+                    // Translate data bytes to a ASCII string.
+                    data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                    Console.WriteLine("Received: {0}", data);
+
+                    //--------------------
+
+                    // Process the data sent by the client.
+                    data = data.ToUpper();
+
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+
+                    // Send back a response.
+                    stream.Write(msg, 0, msg.Length);
+                    Console.WriteLine("Sent: {0}", data);
+                }
+            }
+
+        }//end method OpenStream
         
     
 
