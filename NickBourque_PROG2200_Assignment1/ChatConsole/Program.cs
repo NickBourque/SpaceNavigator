@@ -14,11 +14,13 @@ namespace ChatConsole
             if (args.Length > 0 && args[0] == "-server")
             {
                 Server server = new Server();
+                Console.WriteLine("Waiting for client connection.");
                 server.connect();
             }
             else
             {
                 Client client = new Client();
+                client.connect();
             }
 
 

@@ -16,6 +16,11 @@ namespace ChatLib
             IPAddress local = IPAddress.Parse("127.0.0.1");
             TcpListener listener = new TcpListener(local, port);
             listener.Start();
+
+            while (true)
+            {
+                TcpClient client = listener.AcceptTcpClient();
+            }
         }//end method connect
         
     
