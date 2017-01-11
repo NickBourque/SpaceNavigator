@@ -20,7 +20,7 @@ namespace ChatLib
         {
             if (message.ToLower() == "quit")
             {
-                message = "Your chat partner has left the session. Enter \"quit\" to exit.";
+                message = "Your chat partner has left the session.";
                 data = System.Text.Encoding.ASCII.GetBytes(message);
                 stream.Write(data, 0, data.Length);
                 Environment.Exit(0);
@@ -35,12 +35,12 @@ namespace ChatLib
             try
             {
                 data = new Byte[256];
-                string receivedData = String.Empty;
+                string receivedMessage = String.Empty;
                 if (stream.DataAvailable)
                 {
                     Int32 bytes = stream.Read(data, 0, data.Length);
-                    receivedData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                    return receivedData;
+                    receivedMessage = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    return receivedMessage;
                 }
             }
             catch (Exception ex)

@@ -10,8 +10,8 @@ namespace ChatLib
         
         public override bool Connect() {
             Int32 port = 1234;
-            IPAddress local = IPAddress.Parse("127.0.0.1");
-            listener = new TcpListener(local, port);
+            IPAddress localHost = IPAddress.Parse("127.0.0.1");
+            listener = new TcpListener(localHost, port);
             listener.Start();
 
             while (true)

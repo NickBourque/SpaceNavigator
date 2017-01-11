@@ -1,5 +1,6 @@
 ﻿using System;
 using ChatLib;
+using System.IO;
 
 namespace ChatConsole
 {
@@ -8,22 +9,22 @@ namespace ChatConsole
         static void Main(string[] args)
         {
             SuperClientServer chatter;
-            bool conn;
+            bool connected;
 
             if (args.Length > 0 && args[0] == "-server")
             {
                 chatter = new Server();
                 Console.WriteLine("Waiting for client connection...");
-                conn = chatter.Connect();
+                connected = chatter.Connect();
                 Console.WriteLine("Client Connected!");
                 chatter.OpenStream();
             }
             else
             {
                 chatter = new Client();
-                conn = chatter.Connect();
+                connected = chatter.Connect();
 
-                if (conn)
+                if (connected)
                 {
                     Console.WriteLine("Connected to Server!");
                     chatter.OpenStream();
@@ -49,17 +50,28 @@ namespace ChatConsole
                     if (keyInfo.Key == ConsoleKey.I)
                     {
                         Console.Write(">>");
-                        string message = Console.ReadLine();
-                        chatter.SendMessage(message);
+                        string outgoingMessage = Console.ReadLine();
+                        try
+                        {
+                            chatter.SendMessage(outgoingMessage);
+                        }
+                        catch(IOException ioEx)
+                        {
+                            Console.WriteLine("Connection lost! Press Enter to exit.");
+                            Console.Read();
+                            Environment.Exit(0);
+                        }
+                        
+                        
                     }
 
                 }
 
-                string msgIn = chatter.ReceiveMessage();
+                string incomingMessage = chatter.ReceiveMessage();
 
-                if (msgIn != null)
+                if (incomingMessage != null)
                 {
-                    Console.WriteLine(msgIn);
+                    Console.WriteLine(incomingMessage);
                 }
             }//end while loop
                 
