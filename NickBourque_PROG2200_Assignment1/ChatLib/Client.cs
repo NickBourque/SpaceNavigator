@@ -5,10 +5,6 @@ namespace ChatLib
 {
     public class Client : SuperClientServer
     {
-        //TcpClient client = null;
-        //NetworkStream stream = null;
-        //Byte[] data = null;
-
         public override bool Connect() {
 
             Int32 port = 1234;
@@ -25,4 +21,5 @@ namespace ChatLib
         }//end overridden method Connect
 
     }//end class Client
+
 }//end namespace ChatLib
