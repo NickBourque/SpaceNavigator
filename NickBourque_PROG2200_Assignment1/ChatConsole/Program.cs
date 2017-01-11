@@ -38,6 +38,8 @@ namespace ChatConsole
 
             }
 
+            Console.WriteLine("Press the \"i\" key to start typing a message.");
+            Console.WriteLine("Enter \"quit\" to exit.");
             while (true)
             {
                 if (Console.KeyAvailable)

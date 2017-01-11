@@ -18,7 +18,13 @@ namespace ChatLib
 
         public void SendMessage(string message)
         {
-            if (message == "quit") { Environment.Exit(0); }
+            if (message.ToLower() == "quit")
+            {
+                message = "Your chat partner has left the session. Enter \"quit\" to exit.";
+                data = System.Text.Encoding.ASCII.GetBytes(message);
+                stream.Write(data, 0, data.Length);
+                Environment.Exit(0);
+            }
 
             data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
