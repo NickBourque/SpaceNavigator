@@ -52,6 +52,21 @@ namespace ChatConsole
                     {
                         Console.Write(">>");
                         string outgoingMessage = Console.ReadLine();
+                        if (outgoingMessage.ToLower() == "quit")
+                        {
+                            outgoingMessage = "----->Your chat partner has left the session.";
+
+                            try
+                            {
+                                chatter.SendMessage(outgoingMessage);
+                            }
+                            catch (IOException ioEx)
+                            {
+                                Environment.Exit(0);
+                            }
+                            
+                            Environment.Exit(0);
+                        }
                         try
                         {
                             chatter.SendMessage(outgoingMessage);
