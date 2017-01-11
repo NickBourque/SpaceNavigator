@@ -20,9 +20,6 @@ namespace ChatLib
         {
             if (message.ToLower() == "quit")
             {
-                message = "Your chat partner has left the session.";
-                data = System.Text.Encoding.ASCII.GetBytes(message);
-                stream.Write(data, 0, data.Length);
                 Environment.Exit(0);
             }
 

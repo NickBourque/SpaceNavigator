@@ -14,7 +14,7 @@ namespace ChatConsole
             if (args.Length > 0 && args[0] == "-server")
             {
                 chatter = new Server();
-                Console.WriteLine("Waiting for client connection...");
+                Console.Write("Waiting for client connection...");
                 connected = chatter.Connect();
                 Console.WriteLine("Client Connected!");
                 chatter.OpenStream();
@@ -40,7 +40,8 @@ namespace ChatConsole
             }
 
             Console.WriteLine("Press the \"i\" key to start typing a message.");
-            Console.WriteLine("Enter \"quit\" to exit.");
+            Console.WriteLine("Enter \"quit\" to exit.\n");
+            Console.WriteLine("-----------------------\n");
             while (true)
             {
                 if (Console.KeyAvailable)
