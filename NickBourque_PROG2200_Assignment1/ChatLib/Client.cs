@@ -12,8 +12,8 @@ namespace ChatLib
         /// <returns>True if a connection is successfully established, false if the connection fails.</returns>
         public override bool Connect() {
 
-            Int32 port = 1234;
-            string server = "127.0.0.1";
+            Int32 port = 1234;              //The port on which the Client communicates.
+            string server = "127.0.0.1";    //The IP address of the server the Client wishes to connect to.
             try
             {
                 client = new TcpClient(server, port);

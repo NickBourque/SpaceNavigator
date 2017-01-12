@@ -14,9 +14,9 @@ namespace ChatLib
         /// </summary>
         /// <returns>True when a TcpClient connects to the same port as the TcpListener</returns>
         public override bool Connect() {
-            Int32 port = 1234;
-            IPAddress localHost = IPAddress.Parse("127.0.0.1");
-            listener = new TcpListener(localHost, port);
+            Int32 port = 1234;                                      //The port on which the Server communicates.
+            IPAddress localHost = IPAddress.Parse("127.0.0.1");     //The IP address of the Server.
+            listener = new TcpListener(localHost, port);            //A TcpListener object which acts as the chat server. The Client will connect to this listener.
             listener.Start();
 
             while (true)

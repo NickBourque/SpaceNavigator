@@ -5,16 +5,18 @@ namespace ChatLib
 {
     public abstract class SuperClientServer
     {
-        public NetworkStream stream = null;
-        public TcpClient client = null;
-        Byte[] data = null;
+        public NetworkStream stream = null;     //Used to hold the NetworkStream object.
+        public TcpClient client = null;         //Used to hold the TcpClient object.
+        Byte[] data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
         
+
         /// <summary>
         /// Abstract Connect method. Overridden in Client and Server subclasses.
         /// </summary>
         /// <returns>Boolean identifying whether a connection has been established.</returns>
         public abstract bool Connect();
  
+
         /// <summary>
         /// Opens a NetworkStream via which messages can be sent and received.
         /// </summary>
@@ -22,6 +24,7 @@ namespace ChatLib
         {
             stream = client.GetStream();
         }//end method OpenStream
+        
 
         /// <summary>
         /// Converts message text to a byte array and writes it to the stream.
@@ -33,6 +36,12 @@ namespace ChatLib
             stream.Write(data, 0, data.Length);
         }//end method SendMessage
 
+
+        /// <summary>
+        /// If incomming data is available on the NetworkStream, the data is read into a byte array, 
+        /// encoded as a string and returned.
+        /// </summary>
+        /// <returns>A string of the received message, or null if no message is received.</returns>
         public string ReceiveMessage()
         {
             try
