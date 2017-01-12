@@ -78,7 +78,6 @@ namespace ChatConsole
                             Environment.Exit(0);
                         }
                         
-                        
                     }
 
                 }

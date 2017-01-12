@@ -8,7 +8,7 @@ namespace ChatLib
         public NetworkStream stream = null;     //Used to hold the NetworkStream object.
         public TcpClient client = null;         //Used to hold the TcpClient object.
         Byte[] data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
-        
+       
 
         /// <summary>
         /// Abstract Connect method. Overridden in Client and Server subclasses.
@@ -23,6 +23,7 @@ namespace ChatLib
         public void OpenStream()
         {
             stream = client.GetStream();
+
         }//end method OpenStream
         
 
