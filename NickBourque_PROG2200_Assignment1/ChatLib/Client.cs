@@ -16,7 +16,7 @@ namespace ChatLib
             string server = "127.0.0.1";    //The IP address of the server the Client wishes to connect to.
             try
             {
-                client = new TcpClient(server, port);
+                Client = new TcpClient(server, port);
                 return true;
             }
             catch(SocketException sockEx)

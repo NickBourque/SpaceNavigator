@@ -5,9 +5,9 @@ namespace ChatLib
 {
     public abstract class SuperClientServer
     {
-        public NetworkStream stream = null;     //Used to hold the NetworkStream object.
-        public TcpClient client = null;         //Used to hold the TcpClient object.
-        Byte[] data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
+        public NetworkStream Stream = null;     //Used to hold the NetworkStream object.
+        public TcpClient Client = null;         //Used to hold the TcpClient object.
+        Byte[] Data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
        
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace ChatLib
         /// </summary>
         public void OpenStream()
         {
-            stream = client.GetStream();
+            Stream = Client.GetStream();
 
         }//end method OpenStream
         
@@ -33,8 +33,8 @@ namespace ChatLib
         /// <param name="message">The actual message text typed by the user (before it is converted).</param>
         public void SendMessage(string message)
         {
-            data = System.Text.Encoding.ASCII.GetBytes(message);
-            stream.Write(data, 0, data.Length);
+            Data = System.Text.Encoding.ASCII.GetBytes(message);
+            Stream.Write(Data, 0, Data.Length);
         }//end method SendMessage
 
 
@@ -47,12 +47,12 @@ namespace ChatLib
         {
             try
             {
-                data = new Byte[256];
+                Data = new Byte[256];
                 string receivedMessage = String.Empty;
-                if (stream.DataAvailable)
+                if (Stream.DataAvailable)
                 {
-                    Int32 bytes = stream.Read(data, 0, data.Length);
-                    receivedMessage = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    Int32 bytes = Stream.Read(Data, 0, Data.Length);
+                    receivedMessage = System.Text.Encoding.ASCII.GetString(Data, 0, bytes);
                     return receivedMessage;
                 }
             }

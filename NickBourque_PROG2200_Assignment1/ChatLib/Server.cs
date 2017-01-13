@@ -6,7 +6,7 @@ namespace ChatLib
 {
     public class Server : SuperClientServer
     {
-        TcpListener listener = null;
+        TcpListener Listener = null;
 
         /// <summary>
         /// This method overrides the parent class's abstract Connect method.
@@ -16,12 +16,12 @@ namespace ChatLib
         public override bool Connect() {
             Int32 port = 1234;                                      //The port on which the Server communicates.
             IPAddress localHost = IPAddress.Parse("127.0.0.1");     //The IP address of the Server.
-            listener = new TcpListener(localHost, port);            //A TcpListener object which acts as the chat server. The Client will connect to this listener.
-            listener.Start();
+            Listener = new TcpListener(localHost, port);            //A TcpListener object which acts as the chat server. The Client will connect to this listener.
+            Listener.Start();
 
             while (true)
             {
-                client = listener.AcceptTcpClient();
+                Client = Listener.AcceptTcpClient();
                 return true;
             }
         }//end overridden method Connect
