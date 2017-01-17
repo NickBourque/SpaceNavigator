@@ -10,19 +10,20 @@ namespace ChatConsole
         {
             Messenger chatter;
             bool connected;
+            string errorMessage = string.Empty;
 
             if (args.Length > 0 && args[0] == "-server")
             {
                 chatter = new Server();
                 Console.Write("Waiting for client connection...");
-                connected = chatter.Connect();
+                connected = chatter.Connect(out errorMessage);
                 Console.WriteLine("Client Connected!");
                 chatter.OpenStream();
             }
             else
             {
                 chatter = new Client();
-                connected = chatter.Connect();
+                connected = chatter.Connect(out errorMessage);
 
                 if (connected)
                 {

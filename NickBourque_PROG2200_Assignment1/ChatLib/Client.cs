@@ -13,7 +13,9 @@ namespace ChatLib
         /// It is used by the Client object to make a connection to the Server.
         /// </summary>
         /// <returns>True if a connection is successfully established, false if the connection fails.</returns>
-        public override bool Connect() {
+        public override bool Connect(out string errorMessage) {
+
+            errorMessage = string.Empty;
 
             Int32 port = 1234;              //The port on which the Client communicates.
             string server = "127.0.0.1";    //The IP address of the server the Client wishes to connect to.
@@ -24,6 +26,7 @@ namespace ChatLib
             }
             catch(SocketException sockEx)
             {
+                errorMessage = sockEx.Message;
                 return false;
             }
         }//end overridden method Connect

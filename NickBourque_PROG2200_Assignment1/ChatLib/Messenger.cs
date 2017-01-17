@@ -17,7 +17,7 @@ namespace ChatLib
         /// Abstract Connect method. Overridden in Client and Server subclasses.
         /// </summary>
         /// <returns>Boolean identifying whether a connection has been established.</returns>
-        public abstract bool Connect();
+        public abstract bool Connect(out string errorMessage);
  
 
         /// <summary>
