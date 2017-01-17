@@ -8,7 +8,7 @@ namespace ChatConsole
     {
         static void Main(string[] args)
         {
-            SuperClientServer chatter;
+            Messenger chatter;
             bool connected;
 
             if (args.Length > 0 && args[0] == "-server")

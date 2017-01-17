@@ -3,7 +3,7 @@ using System.Net.Sockets;
 
 namespace ChatLib
 {
-    public class Client : SuperClientServer
+    public class Client : Messenger
     {
         /// <summary>
         /// This method overrides the parent class's abstract Connect method.

@@ -3,7 +3,7 @@ using System.Net.Sockets;
 
 namespace ChatLib
 {
-    public abstract class SuperClientServer
+    public abstract class Messenger
     {
         public NetworkStream Stream = null;     //Used to hold the NetworkStream object.
         public TcpClient Client = null;         //Used to hold the TcpClient object.

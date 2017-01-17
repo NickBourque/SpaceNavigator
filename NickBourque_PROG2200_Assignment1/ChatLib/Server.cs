@@ -4,7 +4,7 @@ using System.Net.Sockets;
 
 namespace ChatLib
 {
-    public class Server : SuperClientServer
+    public class Server : Messenger
     {
         
 
