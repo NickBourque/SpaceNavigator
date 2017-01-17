@@ -4,6 +4,9 @@ using System.Net.Sockets;
 
 namespace ChatLib
 {
+    /// <summary>
+    /// Server object accepts connections from a TCP Client. Extends Messenger.
+    /// </summary>
     public class Server : Messenger
     {
         

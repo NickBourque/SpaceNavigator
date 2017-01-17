@@ -3,6 +3,9 @@ using System.Net.Sockets;
 
 namespace ChatLib
 {
+    /// <summary>
+    /// Client object connects to a TCP Listener. Extends Messenger.
+    /// </summary>
     public class Client : Messenger
     {
         /// <summary>

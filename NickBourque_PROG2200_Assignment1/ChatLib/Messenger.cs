@@ -3,6 +3,9 @@ using System.Net.Sockets;
 
 namespace ChatLib
 {
+    /// <summary>
+    /// Abstract class extended by Client and Server. Creates a connection, opens a NetworkStream, sends and receives messages.
+    /// </summary>
     public abstract class Messenger
     {
         public NetworkStream Stream = null;     //Used to hold the NetworkStream object.
