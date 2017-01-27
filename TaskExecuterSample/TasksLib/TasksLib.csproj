@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Delegates.cs" />
     <Compile Include="Executor.cs" />
+    <Compile Include="ProgressChangedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

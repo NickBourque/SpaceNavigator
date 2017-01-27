@@ -12,21 +12,31 @@ namespace TasksLib
         public event ProgressChangedEventHandler ProgressChanged;
         public event ProgressCompleteEventHandler ProgressComplete;
 
+        public bool stopExecution = false;
+
         public void DoSomethingThatTakesAWhile()
         {
             for(int i=1; i<=100; i++)
             {
+                if (stopExecution) break;
+
                 //do work
                 Thread.Sleep(100);
 
                 //broadcast that some work was done 
                 //i.e. raise and event
-                ProgressChanged(i);
+                ProgressChanged(this, new ProgressChangedEventArgs(i));
                 
             }
-            //when for loop done:
-            ProgressComplete();
-            
+
+            //when for loop done, raise an event to broadcast that task is complete.
+            if (!stopExecution)
+            { 
+                ProgressComplete(this, EventArgs.Empty);
+            }
+
+            stopExecution = false;
+
         }
     }
 }

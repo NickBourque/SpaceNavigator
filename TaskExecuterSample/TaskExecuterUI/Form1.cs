@@ -15,6 +15,7 @@ namespace TaskExecuterUI
     public partial class TasksForm : Form
     {
         Executor executer = new Executor();
+        Thread workerThread;
 
 
 
@@ -26,7 +27,7 @@ namespace TaskExecuterUI
         }
 
 
-        private void Executer_ProgressComplete()
+        private void Executer_ProgressComplete(object sender, EventArgs e)
         {
             if(StartButton.InvokeRequired)
             {
@@ -42,40 +43,64 @@ namespace TaskExecuterUI
             {
                 StartButton.Enabled = true;
             }
-
-
-
-
+            
             StartButton.Enabled = true;
         }
 
 
-        private void Executer_ProgressChanged(int progress)
+        private void Executer_ProgressChanged(object sender, TasksLib.ProgressChangedEventArgs e)
         {
             if(TasksProgressBar.InvokeRequired)
             {
                 MethodInvoker invoker = new MethodInvoker(delegate () {
                     //update progress bar
-                    TasksProgressBar.Value = progress;
+                    TasksProgressBar.Value = e.Progress;
                 });
 
-                TasksProgressBar.Invoke(invoker);
+                TasksProgressBar.BeginInvoke(invoker);
 
             }
             else
             {
                 //update progress bar
-                TasksProgressBar.Value = progress;
+                TasksProgressBar.Value = e.Progress;
             }
             
         }
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            Thread workerThread = new Thread(executer.DoSomethingThatTakesAWhile);
+            workerThread = new Thread(executer.DoSomethingThatTakesAWhile);
             workerThread.Name = "MyWorkerThread";
             workerThread.Start();
             StartButton.Enabled = false;
+            CancelButton.Enabled = true;
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            //prematurely cancel workerThread
+            //workerThread.Abort(); //don't do this!!!!!!!!
+
+            executer.stopExecution = true; //do this instead
+
+            StartButton.Enabled = true;
+            CancelButton.Enabled = false;
+        }
+
+        private void TasksForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TasksForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //close the workerThread, if it's active
+
+            if(workerThread != null && workerThread.IsAlive) { 
+                executer.stopExecution = true;
+                workerThread.Join();
+            }
         }
     }
 }

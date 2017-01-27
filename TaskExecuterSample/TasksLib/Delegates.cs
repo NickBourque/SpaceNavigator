@@ -1,6 +1,8 @@
-﻿namespace TasksLib
-{
-    public delegate void ProgressChangedEventHandler(int progress);
+﻿using System;
 
-    public delegate void ProgressCompleteEventHandler();
+namespace TasksLib
+{
+    public delegate void ProgressChangedEventHandler(object sender, ProgressChangedEventArgs e);
+
+    public delegate void ProgressCompleteEventHandler(object sender, EventArgs e);
 }
