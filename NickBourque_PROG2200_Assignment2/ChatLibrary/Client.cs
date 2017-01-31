@@ -9,6 +9,8 @@ namespace ChatLibrary
 {
     public class Client
     {
+        public event MessageReceivedEventHandler MessageReceived;
+
         public TcpClient client;                //Holds the TcpClient connection.
         public NetworkStream Stream = null;     //Used to hold the NetworkStream object.
         Byte[] Data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
