@@ -64,7 +64,7 @@
             // CloseToolStripMenuItem
             // 
             this.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem";
-            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.CloseToolStripMenuItem.Text = "Close";
             // 
             // NetworkToolStripMenuItem
@@ -79,13 +79,13 @@
             // ConnectToolStripMenuItem
             // 
             this.ConnectToolStripMenuItem.Name = "ConnectToolStripMenuItem";
-            this.ConnectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ConnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.ConnectToolStripMenuItem.Text = "Connect";
             // 
             // DisconnectToolStripMenuItem
             // 
             this.DisconnectToolStripMenuItem.Name = "DisconnectToolStripMenuItem";
-            this.DisconnectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.DisconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.DisconnectToolStripMenuItem.Text = "Disconnect";
             // 
             // ConversationLabel
@@ -152,9 +152,9 @@
             this.Controls.Add(this.ConversationTextBox);
             this.Controls.Add(this.ConversationLabel);
             this.Controls.Add(this.MainMenuStrip);
-            this.MainMenuStrip = this.MainMenuStrip;
             this.Name = "ChatWindow";
             this.Text = "Nick\'s Chat App";
+            this.Load += new System.EventHandler(this.ChatWindow_Load);
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
             this.ResumeLayout(false);

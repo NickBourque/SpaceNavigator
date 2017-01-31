@@ -74,7 +74,8 @@ namespace ChatLibrary
                 {
                     Int32 bytes = Stream.Read(Data, 0, Data.Length);
                     receivedMessage = System.Text.Encoding.ASCII.GetString(Data, 0, bytes);
-                    return receivedMessage;
+                    MessageReceived(this, new MessageReceivedEventArgs(receivedMessage));
+                    //return receivedMessage;
                 }
             }
             catch (Exception ex)
@@ -84,5 +85,14 @@ namespace ChatLibrary
             return null;
 
         }//end method ReceiveMessage
+
+
+        public void ListenForMessages()
+        {
+            
+        }
+
+
+
     }//end class Client
 }//end namespace ChatLibrary

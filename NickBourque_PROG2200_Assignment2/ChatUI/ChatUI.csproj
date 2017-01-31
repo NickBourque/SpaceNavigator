@@ -86,6 +86,12 @@
   <ItemGroup>
     <Content Include="Messenger-icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChatLibrary\ChatLibrary.csproj">
+      <Project>{0FA67E7D-872F-4B0C-9FF3-5859BDB2713D}</Project>
+      <Name>ChatLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
