@@ -64,7 +64,7 @@ namespace ChatLibrary
         /// encoded as a string and returned.
         /// </summary>
         /// <returns>A string of the received message, or null if no message is received.</returns>
-        public string ReceiveMessage()
+        public void ReceiveMessage()
         {
             try
             {
@@ -80,16 +80,18 @@ namespace ChatLibrary
             }
             catch (Exception ex)
             {
-                return null;
+                
             }
-            return null;
 
         }//end method ReceiveMessage
 
 
         public void ListenForMessages()
         {
-            
+            while(true)
+            {
+                ReceiveMessage();
+            }
         }
 
 

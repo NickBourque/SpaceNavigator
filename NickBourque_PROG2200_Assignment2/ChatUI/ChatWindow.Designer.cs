@@ -79,8 +79,9 @@
             // ConnectToolStripMenuItem
             // 
             this.ConnectToolStripMenuItem.Name = "ConnectToolStripMenuItem";
-            this.ConnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.ConnectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ConnectToolStripMenuItem.Text = "Connect";
+            this.ConnectToolStripMenuItem.Click += new System.EventHandler(this.ConnectToolStripMenuItem_Click);
             // 
             // DisconnectToolStripMenuItem
             // 
@@ -139,6 +140,7 @@
             this.SendButton.TabIndex = 2;
             this.SendButton.Text = "Send";
             this.SendButton.UseVisualStyleBackColor = true;
+            this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
             // ChatWindow
             // 

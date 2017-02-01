@@ -14,24 +14,66 @@ namespace ChatUI
 {
     public partial class ChatWindow : Form
     {
-        Client client = new Client();
-        
+        Client Client = new Client();
+        Thread ListeningThread;
+        bool Connected;
 
         public ChatWindow()
         {
-            client.MessageReceived += new MessageReceivedEventHandler(Client_MessageReceived);
+            Client.MessageReceived += new MessageReceivedEventHandler(Client_MessageReceived);
             InitializeComponent();
         }
 
         public void Client_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
+            if (ConversationTextBox.InvokeRequired)
+            {
+                MethodInvoker invoker = new MethodInvoker(delegate () {
+                    //update convo
+                    ConversationTextBox.AppendText("\r\nServer: " + e.Message);
+                });
+
+                ConversationTextBox.BeginInvoke(invoker);
+
+            }
+            else
+            {
+                //update convo
+                ConversationTextBox.AppendText("\r\nServer: " + e.Message);
+            }
+            
             ConversationTextBox.AppendText("\nServer: " + e.Message);
         }
 
         private void ChatWindow_Load(object sender, EventArgs e)
         {
-            client.Connect();
-            client.OpenStream();
+            
+        }
+
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            string message = MessageTextBox.Text;
+
+            Client.SendMessage(message);
+            ConversationTextBox.AppendText("\r\nYou: " + message);
+
+            MessageTextBox.Clear();
+        }
+
+        private void ConnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Connected = Client.Connect();
+            if (Connected)
+            {
+                Client.OpenStream();
+                ListeningThread = new Thread(Client.ListenForMessages);
+                ListeningThread.Name = "ListeningThread";
+                ListeningThread.Start();
+            }
+            else
+            {
+
+            }
         }
     }
 }
