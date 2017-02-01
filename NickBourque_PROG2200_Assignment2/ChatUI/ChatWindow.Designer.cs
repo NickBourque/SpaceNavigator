@@ -86,8 +86,9 @@
             // DisconnectToolStripMenuItem
             // 
             this.DisconnectToolStripMenuItem.Name = "DisconnectToolStripMenuItem";
-            this.DisconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.DisconnectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.DisconnectToolStripMenuItem.Text = "Disconnect";
+            this.DisconnectToolStripMenuItem.Click += new System.EventHandler(this.DisconnectToolStripMenuItem_Click);
             // 
             // ConversationLabel
             // 

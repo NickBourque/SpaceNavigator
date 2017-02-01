@@ -52,27 +52,71 @@ namespace ChatUI
 
         private void SendButton_Click(object sender, EventArgs e)
         {
-            string message = MessageTextBox.Text;
-
-            Client.SendMessage(message);
-            ConversationTextBox.AppendText("\r\nYou: " + message);
-
-            MessageTextBox.Clear();
+            if (Connected)
+            {
+                string message = MessageTextBox.Text;
+                Client.SendMessage(message);
+                ConversationTextBox.AppendText("\r\nYou: " + message);
+                MessageTextBox.Clear();
+            }
+            else
+            {
+                DisplayErrorMessage("Please connect to the server before trying to send a message.");
+            }
         }
 
         private void ConnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Connected = Client.Connect();
-            if (Connected)
+            if (!Connected)
             {
-                Client.OpenStream();
-                ListeningThread = new Thread(Client.ListenForMessages);
-                ListeningThread.Name = "ListeningThread";
-                ListeningThread.Start();
+                Connected = Client.Connect();
+                if (Connected)
+                {
+                    Client.OpenStream();
+                    ListeningThread = new Thread(Client.ListenForMessages);
+                    ListeningThread.Name = "ListeningThread";
+                    ListeningThread.Start();
+                }
+                else
+                {
+                    DisplayErrorMessage("Could not establish a connection to the server. Please try again later.");
+                }
             }
             else
             {
+                DisplayErrorMessage("You're already connected, you silly goose.");
+            }
+        }
 
+
+        private void DisplayErrorMessage(string message)
+        {
+            MessageBox.Show(this,
+                message,
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+
+        private void DisplayDialog(string message)
+        {
+            MessageBox.Show(this,
+                message,
+                "",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.None);
+        }
+
+        private void DisconnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Connected)
+            {
+                Connected = Client.Disconnect();
+                if (!Connected)
+                {
+                    DisplayDialog("Disconnected Successfully!");
+                }
             }
         }
     }

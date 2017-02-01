@@ -31,6 +31,21 @@ namespace ChatLibrary
         }//end method Connect
 
 
+        public bool Disconnect()
+        {
+            try
+            {
+                client.Close();
+                return false;
+            }
+            catch(NullReferenceException ex)
+            {
+                return true;
+            }
+
+        }
+
+
 
 
         /// <summary>
