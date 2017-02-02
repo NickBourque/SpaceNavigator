@@ -84,9 +84,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Messenger-icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ChatLibrary\ChatLibrary.csproj">
       <Project>{0FA67E7D-872F-4B0C-9FF3-5859BDB2713D}</Project>
       <Name>ChatLibrary</Name>
