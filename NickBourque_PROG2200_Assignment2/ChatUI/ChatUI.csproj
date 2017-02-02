@@ -91,10 +91,6 @@
       <Project>{0FA67E7D-872F-4B0C-9FF3-5859BDB2713D}</Project>
       <Name>ChatLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LoggerLibrary\LoggerLibrary.csproj">
-      <Project>{a5c56f56-7661-455f-a6cc-e816ff5916fc}</Project>
-      <Name>LoggerLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

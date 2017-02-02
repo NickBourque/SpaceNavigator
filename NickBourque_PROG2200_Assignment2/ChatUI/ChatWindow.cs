@@ -1,5 +1,4 @@
 ﻿using ChatLibrary;
-using LoggerLibrary;
 using System;
 using System.IO;
 using System.Threading;
@@ -12,7 +11,7 @@ namespace ChatUI
         Client Client = new Client();
         Thread ListeningThread;
         bool Connected;
-        Logger Logger = new Logger();
+        
 
         public ChatWindow()
         {
@@ -26,7 +25,6 @@ namespace ChatUI
             {
                 MethodInvoker invoker = new MethodInvoker(delegate () {
                     //update conversation
-                    Logger.LogMessage("Server: " + e.Message);
                     ConversationTextBox.AppendText("\r\nServer: " + e.Message);
                 });
 
@@ -36,7 +34,6 @@ namespace ChatUI
             else
             {
                 //update conversation --> this will probably never happen.
-                Logger.LogMessage("Server: " + e.Message);
                 ConversationTextBox.AppendText("\r\nServer: " + e.Message);
             }
             
@@ -55,13 +52,17 @@ namespace ChatUI
                 {
                     string message = MessageTextBox.Text;
                     Client.SendMessage(message);
-                    Logger.LogMessage("You: " + message);
                     ConversationTextBox.AppendText("\r\nYou: " + message);
                     MessageTextBox.Clear();
                 }
                 catch(IOException ioEx)
                 {
                     DisplayErrorMessage("Uh oh! Your connection to the server was lost.");
+                    Connected = Client.Disconnect();
+                    StatusLabel.Text = "Closed";
+                    StatusLabel.ForeColor = System.Drawing.Color.Red;
+                    ConnectToolStripMenuItem.Enabled = true;
+                    DisconnectToolStripMenuItem.Enabled = false;
                 }
             }
             else
@@ -81,7 +82,6 @@ namespace ChatUI
                     ListeningThread = new Thread(Client.ListenForMessages);
                     ListeningThread.Name = "ListeningThread";
                     ListeningThread.Start();
-                    DisplayDialog("Connected Successfully!");
                     ConnectToolStripMenuItem.Enabled = false;
                     DisconnectToolStripMenuItem.Enabled = true;
                     StatusLabel.Text = "Open";
@@ -109,14 +109,6 @@ namespace ChatUI
         }
 
 
-        private void DisplayDialog(string message)
-        {
-            MessageBox.Show(this,
-                message,
-                "",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.None);
-        }
 
         private void DisconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -126,7 +118,6 @@ namespace ChatUI
                 Connected = Client.Disconnect();
                 if (!Connected)
                 {
-                    DisplayDialog("Disconnected Successfully!");
                     ConnectToolStripMenuItem.Enabled = true;
                     DisconnectToolStripMenuItem.Enabled = false;
                     StatusLabel.Text = "Closed";

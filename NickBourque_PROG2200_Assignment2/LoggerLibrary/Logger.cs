@@ -12,9 +12,9 @@ namespace LoggerLibrary
 
         public void LogMessage(string message)
         {
-            using (StreamWriter s = new StreamWriter("C:/Users/NSCC Student/Desktop/ChatLog.txt"))
+            using (StreamWriter s = new StreamWriter("C:/Users/NSCC Student/Desktop/ChatLog.txt", true))
             {
-                s.WriteLine(message + s.NewLine);
+                s.WriteLine(message);
             }
         }
 

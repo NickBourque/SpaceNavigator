@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using LoggerLibrary;
 
 namespace ChatLibrary
 {
@@ -12,6 +13,7 @@ namespace ChatLibrary
         public TcpClient client;                //Holds the TcpClient connection.
         public NetworkStream Stream = null;     //Used to hold the NetworkStream object.
         Byte[] Data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
+        Logger Logger = new Logger();
 
         public bool Connect()
         {
@@ -67,7 +69,9 @@ namespace ChatLibrary
         {
             Data = System.Text.Encoding.ASCII.GetBytes(message);
             Stream.Write(Data, 0, Data.Length);
-            
+
+            Logger.LogMessage("Sent: " + message);
+
         }//end method SendMessage
 
 
@@ -89,6 +93,9 @@ namespace ChatLibrary
                 {
                     Int32 bytes = Stream.Read(Data, 0, Data.Length);
                     receivedMessage = System.Text.Encoding.ASCII.GetString(Data, 0, bytes);
+
+                    Logger.LogMessage("Received: " + receivedMessage);
+
                     MessageReceived(this, new MessageReceivedEventArgs(receivedMessage));
                     //return receivedMessage;
                 }
@@ -110,9 +117,6 @@ namespace ChatLibrary
                 ReceiveMessage();
             }
         }
-
-
-        
 
 
     }//end class Client
