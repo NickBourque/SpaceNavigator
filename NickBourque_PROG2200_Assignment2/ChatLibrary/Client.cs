@@ -118,6 +118,5 @@ namespace ChatLibrary
             }
         }
 
-
     }//end class Client
 }//end namespace ChatLibrary
