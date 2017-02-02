@@ -30,7 +30,7 @@ namespace ChatUI
             if (ConversationTextBox.InvokeRequired)
             {
                 MethodInvoker invoker = new MethodInvoker(delegate () {
-                    //update convo
+                    //update conversation
                     ConversationTextBox.AppendText("\r\nServer: " + e.Message);
                 });
 
@@ -39,7 +39,7 @@ namespace ChatUI
             }
             else
             {
-                //update convo
+                //update conversation --> this will probably never happen.
                 ConversationTextBox.AppendText("\r\nServer: " + e.Message);
             }
             
@@ -131,7 +131,19 @@ namespace ChatUI
 
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (Connected)
+            {
+                Connected = Client.Disconnect();
+            }
+            Environment.Exit(0);
+        }
 
+        private void ChatWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Connected)
+            {
+                Connected = Client.Disconnect();
+            }
         }
     }
 }
