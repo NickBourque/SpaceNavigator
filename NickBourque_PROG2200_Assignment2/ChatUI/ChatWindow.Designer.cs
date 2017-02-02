@@ -64,8 +64,9 @@
             // CloseToolStripMenuItem
             // 
             this.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem";
-            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.CloseToolStripMenuItem.Text = "Close";
+            this.CloseToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
             // NetworkToolStripMenuItem
             // 

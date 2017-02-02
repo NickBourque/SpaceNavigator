@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -10,6 +11,8 @@ namespace ChatLibrary
     public class Client
     {
         public event MessageReceivedEventHandler MessageReceived;
+
+        public bool Listening;
 
         public TcpClient client;                //Holds the TcpClient connection.
         public NetworkStream Stream = null;     //Used to hold the NetworkStream object.
@@ -35,6 +38,7 @@ namespace ChatLibrary
         {
             try
             {
+                this.Listening = false;
                 client.Close();
                 return false;
             }
@@ -68,6 +72,7 @@ namespace ChatLibrary
         {
             Data = System.Text.Encoding.ASCII.GetBytes(message);
             Stream.Write(Data, 0, Data.Length);
+            
         }//end method SendMessage
 
 
@@ -103,7 +108,9 @@ namespace ChatLibrary
 
         public void ListenForMessages()
         {
-            while(true)
+            Listening = true;
+
+            while(Listening)
             {
                 ReceiveMessage();
             }

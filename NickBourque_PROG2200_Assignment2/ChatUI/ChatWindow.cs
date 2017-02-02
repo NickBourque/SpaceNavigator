@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -42,7 +43,6 @@ namespace ChatUI
                 ConversationTextBox.AppendText("\r\nServer: " + e.Message);
             }
             
-            ConversationTextBox.AppendText("\nServer: " + e.Message);
         }
 
         private void ChatWindow_Load(object sender, EventArgs e)
@@ -54,10 +54,17 @@ namespace ChatUI
         {
             if (Connected)
             {
-                string message = MessageTextBox.Text;
-                Client.SendMessage(message);
-                ConversationTextBox.AppendText("\r\nYou: " + message);
-                MessageTextBox.Clear();
+                try
+                {
+                    string message = MessageTextBox.Text;
+                    Client.SendMessage(message);
+                    ConversationTextBox.AppendText("\r\nYou: " + message);
+                    MessageTextBox.Clear();
+                }
+                catch(IOException ioEx)
+                {
+                    DisplayErrorMessage("Uh oh! Your connection to the server was lost.");
+                }
             }
             else
             {
@@ -76,6 +83,7 @@ namespace ChatUI
                     ListeningThread = new Thread(Client.ListenForMessages);
                     ListeningThread.Name = "ListeningThread";
                     ListeningThread.Start();
+                    DisplayDialog("Connected Successfully!");
                 }
                 else
                 {
@@ -112,12 +120,18 @@ namespace ChatUI
         {
             if (Connected)
             {
+                
                 Connected = Client.Disconnect();
                 if (!Connected)
                 {
                     DisplayDialog("Disconnected Successfully!");
                 }
             }
+        }
+
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
