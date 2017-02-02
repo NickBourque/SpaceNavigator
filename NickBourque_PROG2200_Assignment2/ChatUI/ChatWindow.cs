@@ -1,14 +1,8 @@
 ﻿using ChatLibrary;
+using LoggerLibrary;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChatUI
@@ -18,6 +12,7 @@ namespace ChatUI
         Client Client = new Client();
         Thread ListeningThread;
         bool Connected;
+        Logger Logger = new Logger();
 
         public ChatWindow()
         {
@@ -31,6 +26,7 @@ namespace ChatUI
             {
                 MethodInvoker invoker = new MethodInvoker(delegate () {
                     //update conversation
+                    Logger.LogMessage("Server: " + e.Message);
                     ConversationTextBox.AppendText("\r\nServer: " + e.Message);
                 });
 
@@ -40,6 +36,7 @@ namespace ChatUI
             else
             {
                 //update conversation --> this will probably never happen.
+                Logger.LogMessage("Server: " + e.Message);
                 ConversationTextBox.AppendText("\r\nServer: " + e.Message);
             }
             
@@ -58,6 +55,7 @@ namespace ChatUI
                 {
                     string message = MessageTextBox.Text;
                     Client.SendMessage(message);
+                    Logger.LogMessage("You: " + message);
                     ConversationTextBox.AppendText("\r\nYou: " + message);
                     MessageTextBox.Clear();
                 }
@@ -84,6 +82,10 @@ namespace ChatUI
                     ListeningThread.Name = "ListeningThread";
                     ListeningThread.Start();
                     DisplayDialog("Connected Successfully!");
+                    ConnectToolStripMenuItem.Enabled = false;
+                    DisconnectToolStripMenuItem.Enabled = true;
+                    StatusLabel.Text = "Open";
+                    StatusLabel.ForeColor = System.Drawing.Color.Green;
                 }
                 else
                 {
@@ -125,6 +127,10 @@ namespace ChatUI
                 if (!Connected)
                 {
                     DisplayDialog("Disconnected Successfully!");
+                    ConnectToolStripMenuItem.Enabled = true;
+                    DisconnectToolStripMenuItem.Enabled = false;
+                    StatusLabel.Text = "Closed";
+                    StatusLabel.ForeColor = System.Drawing.Color.Red;
                 }
             }
         }
@@ -143,6 +149,14 @@ namespace ChatUI
             if (Connected)
             {
                 Connected = Client.Disconnect();
+            }
+        }
+
+        private void MessageTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                SendButton_Click(this, e);
             }
         }
     }

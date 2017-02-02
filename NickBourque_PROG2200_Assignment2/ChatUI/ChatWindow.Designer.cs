@@ -39,6 +39,8 @@
             this.MessageLabel = new System.Windows.Forms.Label();
             this.MessageTextBox = new System.Windows.Forms.TextBox();
             this.SendButton = new System.Windows.Forms.Button();
+            this.ConnectionStatusLabel = new System.Windows.Forms.Label();
+            this.StatusLabel = new System.Windows.Forms.Label();
             this.MainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,6 +88,7 @@
             // 
             // DisconnectToolStripMenuItem
             // 
+            this.DisconnectToolStripMenuItem.Enabled = false;
             this.DisconnectToolStripMenuItem.Name = "DisconnectToolStripMenuItem";
             this.DisconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.DisconnectToolStripMenuItem.Text = "Disconnect";
@@ -94,16 +97,17 @@
             // ConversationLabel
             // 
             this.ConversationLabel.AutoSize = true;
-            this.ConversationLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ConversationLabel.Location = new System.Drawing.Point(23, 44);
+            this.ConversationLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ConversationLabel.Location = new System.Drawing.Point(23, 37);
             this.ConversationLabel.Name = "ConversationLabel";
-            this.ConversationLabel.Size = new System.Drawing.Size(80, 15);
+            this.ConversationLabel.Size = new System.Drawing.Size(105, 21);
             this.ConversationLabel.TabIndex = 0;
             this.ConversationLabel.Text = "Conversation:";
             // 
             // ConversationTextBox
             // 
             this.ConversationTextBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.ConversationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ConversationTextBox.Location = new System.Drawing.Point(26, 60);
             this.ConversationTextBox.Multiline = true;
             this.ConversationTextBox.Name = "ConversationTextBox";
@@ -116,40 +120,64 @@
             // MessageLabel
             // 
             this.MessageLabel.AutoSize = true;
-            this.MessageLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MessageLabel.Location = new System.Drawing.Point(23, 342);
+            this.MessageLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MessageLabel.Location = new System.Drawing.Point(23, 335);
             this.MessageLabel.Name = "MessageLabel";
-            this.MessageLabel.Size = new System.Drawing.Size(111, 15);
+            this.MessageLabel.Size = new System.Drawing.Size(146, 21);
             this.MessageLabel.TabIndex = 0;
             this.MessageLabel.Text = "Type Your Message:";
             // 
             // MessageTextBox
             // 
+            this.MessageTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MessageTextBox.Location = new System.Drawing.Point(26, 358);
-            this.MessageTextBox.Multiline = true;
             this.MessageTextBox.Name = "MessageTextBox";
             this.MessageTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.MessageTextBox.Size = new System.Drawing.Size(520, 52);
+            this.MessageTextBox.Size = new System.Drawing.Size(520, 24);
             this.MessageTextBox.TabIndex = 1;
+            this.MessageTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MessageTextBox_KeyDown);
             // 
             // SendButton
             // 
             this.SendButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SendButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SendButton.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SendButton.Location = new System.Drawing.Point(564, 358);
             this.SendButton.Name = "SendButton";
-            this.SendButton.Size = new System.Drawing.Size(75, 52);
+            this.SendButton.Size = new System.Drawing.Size(75, 24);
             this.SendButton.TabIndex = 2;
             this.SendButton.Text = "Send";
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
+            // 
+            // ConnectionStatusLabel
+            // 
+            this.ConnectionStatusLabel.AutoSize = true;
+            this.ConnectionStatusLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ConnectionStatusLabel.Location = new System.Drawing.Point(439, 37);
+            this.ConnectionStatusLabel.Name = "ConnectionStatusLabel";
+            this.ConnectionStatusLabel.Size = new System.Drawing.Size(138, 21);
+            this.ConnectionStatusLabel.TabIndex = 5;
+            this.ConnectionStatusLabel.Text = "Connection Status:";
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.AutoSize = true;
+            this.StatusLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StatusLabel.ForeColor = System.Drawing.Color.Red;
+            this.StatusLabel.Location = new System.Drawing.Point(583, 37);
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(57, 21);
+            this.StatusLabel.TabIndex = 6;
+            this.StatusLabel.Text = "Closed";
             // 
             // ChatWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(665, 422);
+            this.ClientSize = new System.Drawing.Size(665, 397);
+            this.Controls.Add(this.StatusLabel);
+            this.Controls.Add(this.ConnectionStatusLabel);
             this.Controls.Add(this.SendButton);
             this.Controls.Add(this.MessageTextBox);
             this.Controls.Add(this.MessageLabel);
@@ -180,6 +208,8 @@
         private System.Windows.Forms.Label MessageLabel;
         private System.Windows.Forms.TextBox MessageTextBox;
         private System.Windows.Forms.Button SendButton;
+        private System.Windows.Forms.Label ConnectionStatusLabel;
+        private System.Windows.Forms.Label StatusLabel;
     }
 }
 

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatLibrary
 {
@@ -38,7 +33,7 @@ namespace ChatLibrary
         {
             try
             {
-                this.Listening = false;
+                Listening = false;
                 client.Close();
                 return false;
             }
@@ -116,6 +111,8 @@ namespace ChatLibrary
             }
         }
 
+
+        
 
 
     }//end class Client
