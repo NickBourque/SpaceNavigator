@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace LoggerLibrary
         /// <param name="message">The message to be logged (Sent/Received).</param>
         public void LogMessage(string message)
         {
-            using (StreamWriter s = new StreamWriter("ChatLog.txt", true))
+            using (StreamWriter s = new StreamWriter(ConfigurationManager.AppSettings["LogPath"], true))
             {
                 s.WriteLine(message);
             }
