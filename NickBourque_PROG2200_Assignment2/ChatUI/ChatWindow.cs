@@ -116,6 +116,7 @@ namespace ChatUI
             {
                 
                 Connected = Client.Disconnect();
+                ListeningThread.Join();
                 if (!Connected)
                 {
                     ConnectToolStripMenuItem.Enabled = true;
@@ -131,6 +132,7 @@ namespace ChatUI
             if (Connected)
             {
                 Connected = Client.Disconnect();
+                ListeningThread.Join();
             }
             Environment.Exit(0);
         }
@@ -140,6 +142,7 @@ namespace ChatUI
             if (Connected)
             {
                 Connected = Client.Disconnect();
+                ListeningThread.Join();
             }
         }
 

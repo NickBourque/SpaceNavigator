@@ -4,21 +4,30 @@ using LoggerLibrary;
 
 namespace ChatLibrary
 {
+
+    /// <summary>
+    /// A client that can connect to a TcpListener, send and receive messages.
+    /// </summary>
     public class Client
     {
-        public event MessageReceivedEventHandler MessageReceived;
+        
+        public event MessageReceivedEventHandler MessageReceived;   //Event fires when a new message is received.
 
-        public bool Listening;
-
-        public TcpClient client;                //Holds the TcpClient connection.
-        public NetworkStream Stream = null;     //Used to hold the NetworkStream object.
+        bool Listening;                         //Determines if the client should keep listening for incoming messages.
+        TcpClient client;                       //Holds the TcpClient connection.
+        NetworkStream Stream = null;            //Used to hold the NetworkStream object.
         Byte[] Data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
         Logger Logger = new Logger();
 
+
+        /// <summary>
+        /// Connects to a TcpListener
+        /// </summary>
+        /// <returns>Boolean; true if connect success, false if connect fails.</returns>
         public bool Connect()
         {
-            Int32 port = 1234;              //The port on which the Client communicates.
-            string server = "127.0.0.1";    //The IP address of the server the Client wishes to connect to.
+            Int32 port = 1234;                  //The port on which the Client communicates.
+            string server = "127.0.0.1";        //The IP address of the server the Client wishes to connect to.
             try
             {
                 client = new TcpClient(server, port);
@@ -31,6 +40,10 @@ namespace ChatLibrary
         }//end method Connect
 
 
+        /// <summary>
+        /// Closes the TcpClient connection to the TcpListener.
+        /// </summary>
+        /// <returns>Boolean; false if disconnected, true if fails to disconnect (i.e. connected = true).</returns>
         public bool Disconnect()
         {
             try
@@ -43,11 +56,8 @@ namespace ChatLibrary
             {
                 return true;
             }
-
-        }
-
-
-
+        }//end method Disconnect
+        
 
         /// <summary>
         /// Opens a NetworkStream via which messages can be sent and received.
@@ -55,14 +65,11 @@ namespace ChatLibrary
         public void OpenStream()
         {
             Stream = client.GetStream();
-
         }//end method OpenStream
-
-
-
+        
 
         /// <summary>
-        /// Converts message text to a byte array and writes it to the stream.
+        /// Converts message text to a byte array and writes it to the stream, and logs the message.
         /// </summary>
         /// <param name="message">The actual message text typed by the user (before it is converted).</param>
         public void SendMessage(string message)
@@ -70,19 +77,15 @@ namespace ChatLibrary
             Data = System.Text.Encoding.ASCII.GetBytes(message);
             Stream.Write(Data, 0, Data.Length);
 
-            Logger.LogMessage("Sent: " + message);
+            Logger.LogMessage("("+DateTime.Now + ") Sent: " + message);
 
         }//end method SendMessage
 
 
-
-
-
         /// <summary>
         /// If incoming data is available on the NetworkStream, the data is read into a byte array, 
-        /// encoded as a string and returned.
+        /// encoded as a string and returned. Also logs the message.
         /// </summary>
-        /// <returns>A string of the received message, or null if no message is received.</returns>
         public void ReceiveMessage()
         {
             try
@@ -94,20 +97,21 @@ namespace ChatLibrary
                     Int32 bytes = Stream.Read(Data, 0, Data.Length);
                     receivedMessage = System.Text.Encoding.ASCII.GetString(Data, 0, bytes);
 
-                    Logger.LogMessage("Received: " + receivedMessage);
+                    Logger.LogMessage("(" + DateTime.Now + ") Received: " + receivedMessage);
 
                     MessageReceived(this, new MessageReceivedEventArgs(receivedMessage));
-                    //return receivedMessage;
                 }
             }
             catch (Exception ex)
             {
                 
             }
-
         }//end method ReceiveMessage
 
 
+        /// <summary>
+        /// Listening loop to listen for messages.
+        /// </summary>
         public void ListenForMessages()
         {
             Listening = true;
@@ -116,7 +120,7 @@ namespace ChatLibrary
             {
                 ReceiveMessage();
             }
-        }
+        }//end method ListenForMessages
 
     }//end class Client
 }//end namespace ChatLibrary
