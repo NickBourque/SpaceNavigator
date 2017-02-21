@@ -11,7 +11,7 @@ namespace ChatLibrary
     public class Client
     {
 
-        public Client(ILoggingService Logger)
+        public Client(LogLib.ILoggingService Logger)
         {
             this.Logger = Logger;
         }
@@ -23,7 +23,7 @@ namespace ChatLibrary
         TcpClient client;                       //Holds the TcpClient connection.
         NetworkStream Stream = null;            //Used to hold the NetworkStream object.
         Byte[] Data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
-        ILoggingService Logger;// = new Logger();
+        LogLib.ILoggingService Logger;// = new Logger();
 
 
         /// <summary>
