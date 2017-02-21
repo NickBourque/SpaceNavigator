@@ -32,12 +32,17 @@ namespace ChatUI
             //Application.Run(container.Resolve<ChatWindow>());
 
 
-            //STEP 3 - Ninject IOC Container implementation
-            StandardKernel kernel = new StandardKernel();
-            kernel.Bind<ILoggingService>().To<Logger>();
-            Application.Run(kernel.Get<ChatWindow>());
+            //STEP 2 - Ninject IOC Container implementation
+            //StandardKernel kernel = new StandardKernel();
+            //kernel.Bind<ILoggingService>().To<Logger>();
+            //Application.Run(kernel.Get<ChatWindow>());
 
-            
+
+            //STEP 3 - NLog Logging & Unity
+            UnityContainer container = new UnityContainer();
+            container.RegisterType<ILoggingService, NickBourque_Logger>();
+            Application.Run(container.Resolve<ChatWindow>());
+
         }
     }
 }
