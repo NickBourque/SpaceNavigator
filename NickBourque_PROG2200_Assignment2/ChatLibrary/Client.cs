@@ -10,6 +10,12 @@ namespace ChatLibrary
     /// </summary>
     public class Client
     {
+
+        public Client(ILoggingService Logger)
+        {
+            this.Logger = Logger;
+        }
+
         
         public event MessageReceivedEventHandler MessageReceived;   //Event fires when a new message is received.
 
@@ -17,7 +23,7 @@ namespace ChatLibrary
         TcpClient client;                       //Holds the TcpClient connection.
         NetworkStream Stream = null;            //Used to hold the NetworkStream object.
         Byte[] Data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
-        Logger Logger = new Logger();
+        ILoggingService Logger;// = new Logger();
 
 
         /// <summary>
@@ -77,7 +83,7 @@ namespace ChatLibrary
             Data = System.Text.Encoding.ASCII.GetBytes(message);
             Stream.Write(Data, 0, Data.Length);
 
-            Logger.LogMessage("("+DateTime.Now + ") Sent: " + message);
+            Logger.Log("("+DateTime.Now + ") Sent: " + message);
 
         }//end method SendMessage
 
@@ -97,7 +103,7 @@ namespace ChatLibrary
                     Int32 bytes = Stream.Read(Data, 0, Data.Length);
                     receivedMessage = System.Text.Encoding.ASCII.GetString(Data, 0, bytes);
 
-                    Logger.LogMessage("(" + DateTime.Now + ") Received: " + receivedMessage);
+                    Logger.Log("(" + DateTime.Now + ") Received: " + receivedMessage);
 
                     MessageReceived(this, new MessageReceivedEventArgs(receivedMessage));
                 }

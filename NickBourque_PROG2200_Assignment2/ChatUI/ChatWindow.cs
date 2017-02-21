@@ -8,13 +8,15 @@ namespace ChatUI
 {
     public partial class ChatWindow : Form
     {
-        Client Client = new Client();
+        Client Client;// = new Client();
         Thread ListeningThread;
         bool Connected;
         
 
-        public ChatWindow()
+        public ChatWindow(Client Client)
         {
+            this.Client = Client;
+
             Client.MessageReceived += new MessageReceivedEventHandler(Client_MessageReceived);
             InitializeComponent();
         }
