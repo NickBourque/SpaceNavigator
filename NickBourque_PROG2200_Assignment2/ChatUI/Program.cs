@@ -1,5 +1,7 @@
 ﻿using ChatLibrary;
 using LoggerLibrary;
+using Microsoft.Practices.Unity;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,24 @@ namespace ChatUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ChatWindow(new Client(new Logger())));  //Using constructor injection to introduce logger.
+
+
+            //STEP 1 - Using constructor injection to introduce logger.
+            //Application.Run(new ChatWindow(new Client(new Logger())));  
+
+
+            //STEP 2 - Unity IOC Container implementation
+            //UnityContainer container = new UnityContainer();
+            //container.RegisterType<ILoggingService, Logger>();
+            //Application.Run(container.Resolve<ChatWindow>());
+
+
+            //STEP 3 - Ninject IOC Container implementation
+            StandardKernel kernel = new StandardKernel();
+            kernel.Bind<ILoggingService>().To<Logger>();
+            Application.Run(kernel.Get<ChatWindow>());
+
+            
         }
     }
 }
