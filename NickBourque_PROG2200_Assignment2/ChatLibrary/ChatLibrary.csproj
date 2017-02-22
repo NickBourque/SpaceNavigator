@@ -34,6 +34,10 @@
     <Reference Include="log4net">
       <HintPath>..\..\..\LogLib\bin\Debug\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="LogLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LogLib\bin\Debug\LogLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,10 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\LogLib\LogLib.csproj">
-      <Project>{981690f4-3ba2-4b6a-81af-b3a92c34039b}</Project>
-      <Name>LogLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LoggerLibrary\LoggerLibrary.csproj">
       <Project>{a5c56f56-7661-455f-a6cc-e816ff5916fc}</Project>
       <Name>LoggerLibrary</Name>

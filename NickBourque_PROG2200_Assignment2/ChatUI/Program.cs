@@ -1,6 +1,6 @@
 ﻿using ChatLibrary;
 using LoggerLibrary;
-using LogLib;
+//using LogLib;
 using Microsoft.Practices.Unity;
 using Ninject;
 using System;
@@ -40,15 +40,15 @@ namespace ChatUI
 
 
             //STEP 3 - NLog Logging & Unity
-            //UnityContainer container = new UnityContainer();
-            //container.RegisterType<LogLibrary.ILoggingService, NickBourque_Logger>();
-            //Application.Run(container.Resolve<ChatWindow>());
+            UnityContainer container = new UnityContainer();
+            container.RegisterType<ILoggingService, NickBourque_Logger>();
+            Application.Run(container.Resolve<ChatWindow>());
 
 
             //STEP 4 - Using Mike Sturdy's log4net logger (NOTE: must change in Client too).
-            UnityContainer container = new UnityContainer();
-            container.RegisterType<LogLib.ILoggingService, MikeSturdy_logger>();
-            Application.Run(container.Resolve<ChatWindow>());
+            //UnityContainer container = new UnityContainer();
+            //container.RegisterType<ILoggingService, MikeSturdy_logger>();
+            //Application.Run(container.Resolve<ChatWindow>());
 
         }
     }

@@ -38,6 +38,10 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LogLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LogLib\bin\Debug\LogLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -106,10 +110,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\LogLib\LogLib.csproj">
-      <Project>{981690F4-3BA2-4B6A-81AF-B3A92C34039B}</Project>
-      <Name>LogLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ChatLibrary\ChatLibrary.csproj">
       <Project>{0FA67E7D-872F-4B0C-9FF3-5859BDB2713D}</Project>
       <Name>ChatLibrary</Name>

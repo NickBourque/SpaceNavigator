@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using LoggerLibrary;
+//using LogLib;
 
 namespace ChatLibrary
 {
@@ -11,7 +12,7 @@ namespace ChatLibrary
     public class Client
     {
 
-        public Client(LogLib.ILoggingService Logger)
+        public Client(ILoggingService Logger)
         {
             this.Logger = Logger;
         }
@@ -23,7 +24,7 @@ namespace ChatLibrary
         TcpClient client;                       //Holds the TcpClient connection.
         NetworkStream Stream = null;            //Used to hold the NetworkStream object.
         Byte[] Data = null;                     //A byte array to hold byte data to be sent/received over the NetworkStream.
-        LogLib.ILoggingService Logger;// = new Logger();
+        ILoggingService Logger;// = new Logger();
 
 
         /// <summary>
