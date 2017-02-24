@@ -28,9 +28,9 @@ namespace ChatUI
 
 
             //STEP 2 - Unity IOC Container implementation
-            //UnityContainer container = new UnityContainer();
-            //container.RegisterType<ILoggingService, Logger>();
-            //Application.Run(container.Resolve<ChatWindow>());
+            UnityContainer container = new UnityContainer();
+            container.RegisterType<ILoggingService, Logger>();
+            Application.Run(container.Resolve<ChatWindow>());
 
 
             //STEP 2 - Ninject IOC Container implementation
@@ -40,9 +40,9 @@ namespace ChatUI
 
 
             //STEP 3 - NLog Logging & Unity
-            UnityContainer container = new UnityContainer();
-            container.RegisterType<ILoggingService, NickBourque_Logger>();
-            Application.Run(container.Resolve<ChatWindow>());
+            //UnityContainer container = new UnityContainer();
+            //container.RegisterType<ILoggingService, NickBourque_Logger>();
+            //Application.Run(container.Resolve<ChatWindow>());
 
 
             //STEP 4 - Using Mike Sturdy's log4net logger (NOTE: must change in Client too).
