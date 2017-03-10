@@ -10,13 +10,27 @@ namespace BouncyBall
     class Ball
     {
 
-        private int ballSize = 10;
+        private int ballSize = 20;
 
         private Rectangle ballDisplayArea;
         private Rectangle gameplayArea;
 
         public int XVelocity { get; set; }
         public int YVelocity { get; set; }
+
+        private Random random = new Random();
+        private Color color;
+        private Image image;
+
+        public Rectangle DisplayArea
+        {
+            get { return this.ballDisplayArea; }
+        }
+
+        public int Size
+        {
+            get { return this.ballSize; }
+        }
 
         public Ball(Rectangle gameplayArea)
         {
@@ -31,9 +45,14 @@ namespace BouncyBall
 
             //randomly set x and y velocity
             Random random = new Random();
-            XVelocity = random.Next(-10, 10);
-            YVelocity = random.Next(-10, 10);
+            while(XVelocity > -3 && XVelocity <3)
+                XVelocity = random.Next(-10, 10);
 
+            while (YVelocity > -3 && YVelocity < 3)
+                YVelocity = random.Next(-10, 10);
+
+            color = Color.FromArgb(255, random.Next(255), random.Next(255), random.Next(255));
+            image = Image.FromFile(string.Format(@"images\ball{0}.png", random.Next(1,4)));
         }
 
 
@@ -42,30 +61,15 @@ namespace BouncyBall
             ballDisplayArea.X += XVelocity;
             ballDisplayArea.Y += YVelocity;
 
-            if(ballDisplayArea.X <= 0)
-            {
-                XVelocity = XVelocity * -1;
-            }
-            if(ballDisplayArea.X >= gameplayArea.Width - ballSize)
-            {
-                XVelocity = XVelocity * -1;
-            }
-            if(ballDisplayArea.Y <= 0)
-            {
-                YVelocity = YVelocity * -1;
-            }
-            if(ballDisplayArea.Y >= gameplayArea.Height - ballSize)
-            {
-                YVelocity = YVelocity * -1;
-            }
-
         }
 
         public void Draw(Graphics graphics)
         {
-            using (SolidBrush brush = new SolidBrush(Color.White))
+
+            using (SolidBrush brush = new SolidBrush(color))
             {
-                graphics.FillEllipse(brush, ballDisplayArea);
+                //graphics.FillEllipse(brush, ballDisplayArea);
+                graphics.DrawImage(image, ballDisplayArea);
             }
         }
 

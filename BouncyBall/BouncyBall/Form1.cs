@@ -13,7 +13,7 @@ namespace BouncyBall
     public partial class GameForm : Form
     {
         Paddle paddle;
-        Ball ball;
+        HashSet<Ball> balls = new HashSet<Ball>();
         public GameForm()
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace BouncyBall
 
             //create paddle, giving it the display area rectangle of the form
             paddle = new Paddle(this.DisplayRectangle);
-            ball = new Ball(this.DisplayRectangle);
+            balls.Add(new Ball(this.DisplayRectangle));
             
         }
 
@@ -34,7 +34,25 @@ namespace BouncyBall
         {
             //draw the paddle
             paddle.Draw(e.Graphics);
-            ball.Draw(e.Graphics);
+
+            foreach(Ball ball in balls)
+            {
+                ball.Draw(e.Graphics);
+            }
+
+            UpdateBallCount(e.Graphics);
+
+        }
+
+        private void UpdateBallCount(Graphics graphics)
+        {
+            string message = "Ball Count: {0}";
+
+            Font font = new Font("Comic Sans MS", 16);
+            SolidBrush brush = new SolidBrush(Color.White);
+            Point point = new Point(20, 20);
+
+            graphics.DrawString(string.Format(message, balls.Count), font, brush, point);
         }
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
@@ -57,7 +75,8 @@ namespace BouncyBall
                     {
                         if(AnimationTimer.Enabled)
                         {
-                            AnimationTimer.Stop();
+                            //AnimationTimer.Stop();
+                            balls.Add(new Ball(this.DisplayRectangle));
                         }
                         else
                         {
@@ -70,10 +89,57 @@ namespace BouncyBall
 
         private void AnimationTimer_Tick(object sender, EventArgs e)
         {
-            ball.Move();
-
+            CheckForCollisions();
+            
+            foreach(Ball ball in balls)
+            {
+                ball.Move();
+            }
+            
             //redraw screen each tick
             Invalidate();
+        }
+
+
+        private void CheckForCollisions()
+        {
+
+            balls.RemoveWhere(BallMissesPaddle);
+
+            foreach(Ball ball in balls)
+            {
+                //ball left touches wall
+                if (ball.DisplayArea.X <= 0)
+                {
+                    ball.XVelocity *= -1;
+                }
+
+                //ball touches right wall
+                else if (ball.DisplayArea.X >= this.DisplayRectangle.Right - ball.Size)
+                {
+                    ball.XVelocity *= -1;
+                }
+
+                //ball touches ceiling
+                else if (ball.DisplayArea.Y <= 0)
+                {
+                    ball.YVelocity *= -1;
+                }
+
+                //ball touches paddle
+                else if (ball.DisplayArea.IntersectsWith(paddle.DisplayArea))
+                {
+                    ball.YVelocity *= -1;
+                }
+
+                
+            }
+            
+        }
+
+        private bool BallMissesPaddle(Ball ball)
+        {
+            return ball.DisplayArea.Bottom > this.DisplayRectangle.Bottom;
         }
     }
 }

@@ -17,6 +17,11 @@ namespace BouncyBall
 
         public enum Direction { Left, Right }
 
+        public Rectangle DisplayArea
+        {
+            get { return this.paddleDisplayArea; }
+        }
+
 
         public Paddle(Rectangle gameplayArea)//constructor taking in form size rectangle
         {
