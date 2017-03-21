@@ -9,8 +9,8 @@ namespace SpaceNavigator
 {
     class UFO
     {
-        private readonly int UFOHeight = 250;
-        private readonly int UFOWidth = 500;
+        private readonly int UFOHeight = 100;
+        private readonly int UFOWidth = 200;
 
         private Rectangle UFODisplayArea;
         private Rectangle GameplayArea;

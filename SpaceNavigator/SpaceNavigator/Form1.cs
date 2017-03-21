@@ -14,6 +14,7 @@ namespace SpaceNavigator
     {
         Spaceship ship;
         HashSet<UFO> UFOs = new HashSet<UFO>();
+        HashSet<Bullet> Bullets = new HashSet<Bullet>();
 
         public SpaceNavigatorForm()
         {
@@ -39,6 +40,11 @@ namespace SpaceNavigator
             {
                 ufo.Draw(e.Graphics);
             }
+
+            foreach(Bullet bullet in Bullets)
+            {
+                bullet.Draw(e.Graphics);
+            }
         }
 
         private void SpaceNavigatorForm_KeyDown(object sender, KeyEventArgs e)
@@ -55,6 +61,11 @@ namespace SpaceNavigator
                         ship.Move(Spaceship.Direction.Right);
                         break;
                     }
+                case Keys.Space:
+                    {
+                        Bullets.Add(new Bullet(this.DisplayRectangle, ship));
+                        break;
+                    }
             }
         }
 
@@ -64,6 +75,12 @@ namespace SpaceNavigator
             {
                 ufo.Move();
             }
+
+            foreach(Bullet bullet in Bullets)
+            {
+                bullet.Move();
+            }
+
 
             Invalidate();
         }
