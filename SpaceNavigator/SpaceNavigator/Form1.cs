@@ -71,7 +71,9 @@ namespace SpaceNavigator
 
         private void AnimationTimer_Tick(object sender, EventArgs e)
         {
-            foreach(UFO ufo in UFOs)
+            //UFOs.RemoveWhere(BulletHitsUFO);
+
+            foreach (UFO ufo in UFOs)
             {
                 ufo.Move();
             }
@@ -89,5 +91,11 @@ namespace SpaceNavigator
         {
             UFOs.Add(new UFO(this.DisplayRectangle));
         }
+
+
+        //private bool BulletHitsUFO(Bullet bullet, UFO ufo)
+        //{
+        //    return bullet.DisplayArea.IntersectsWith(ufo.DisplayArea);
+        //}
     }
 }
