@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
             this.AsteroidTimer = new System.Windows.Forms.Timer(this.components);
+            this.HealthTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // AnimationTimer
@@ -43,11 +44,17 @@
             this.AsteroidTimer.Interval = 2000;
             this.AsteroidTimer.Tick += new System.EventHandler(this.AsteroidTimer_Tick);
             // 
+            // HealthTimer
+            // 
+            this.HealthTimer.Interval = 20000;
+            this.HealthTimer.Tick += new System.EventHandler(this.HealthTimer_Tick);
+            // 
             // SpaceNavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.BackgroundImage = global::SpaceNavigator.Properties.Resources.Stars;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.DoubleBuffered = true;
             this.Name = "SpaceNavigatorForm";
@@ -63,6 +70,7 @@
 
         private System.Windows.Forms.Timer AnimationTimer;
         private System.Windows.Forms.Timer AsteroidTimer;
+        private System.Windows.Forms.Timer HealthTimer;
     }
 }
 

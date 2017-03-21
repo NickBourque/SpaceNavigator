@@ -42,8 +42,7 @@ namespace SpaceNavigator
 
             XVelocity = random.Next(-10, 10);
             YVelocity = random.Next(5, 25);
-
-            //image = Image.FromFile(string.Format(@"images/Asteroid{0}.png", random2.Next(1, 4)));
+            
             image = Image.FromFile(@"images/Asteroid.png");
         }
 

@@ -13,9 +13,11 @@ namespace SpaceNavigator
     public partial class SpaceNavigatorForm : Form
     {
         Spaceship ship;
+        FinishLine finish;
         HashSet<Asteroid> Asteroids = new HashSet<Asteroid>();
         HashSet<Bullet> Bullets = new HashSet<Bullet>();
-        int health = 1000;
+        HashSet<Health> Healths = new HashSet<Health>();
+        int healthMeter = 100;
 
         public SpaceNavigatorForm()
         {
@@ -27,15 +29,17 @@ namespace SpaceNavigator
             this.WindowState = FormWindowState.Maximized;
 
             ship = new Spaceship(this.DisplayRectangle);
-            //Asteroids.Add(new Asteroid(this.DisplayRectangle));
+            finish = new FinishLine(this.DisplayRectangle);
 
             AnimationTimer.Start();
             AsteroidTimer.Start();
+            HealthTimer.Start();
         }
 
         private void SpaceNavigatorForm_Paint(object sender, PaintEventArgs e)
         {
             ship.Draw(e.Graphics);
+            finish.Draw(e.Graphics);
 
             foreach(Asteroid asteroid in Asteroids)
             {
@@ -47,7 +51,13 @@ namespace SpaceNavigator
                 bullet.Draw(e.Graphics);
             }
 
+            foreach(Health health in Healths)
+            {
+                health.Draw(e.Graphics);
+            }
+
             UpdateLifeCount(e.Graphics);
+            UpdateDistance(e.Graphics);
         }
 
         private void SpaceNavigatorForm_KeyDown(object sender, KeyEventArgs e)
@@ -77,6 +87,8 @@ namespace SpaceNavigator
             Asteroids.RemoveWhere(BulletHitsAsteroid);
             Asteroids.RemoveWhere(AsteroidOffScreen);
             Bullets.RemoveWhere(BulletOffScreen);
+            Healths.RemoveWhere(ShipCollectsHealth);
+            Healths.RemoveWhere(HealthOffScreen);
             CheckForCollisions();
 
             foreach (Asteroid asteroid in Asteroids)
@@ -89,6 +101,12 @@ namespace SpaceNavigator
                 bullet.Move();
             }
 
+            foreach(Health health in Healths)
+            {
+                health.Move();
+            }
+
+            finish.Move();
 
             Invalidate();
         }
@@ -99,7 +117,7 @@ namespace SpaceNavigator
             {
                 if (ship.DisplayArea.IntersectsWith(asteroid.DisplayArea))
                 {
-                    health -= 10;
+                    healthMeter -= 1;
                 }
             }
             
@@ -120,10 +138,25 @@ namespace SpaceNavigator
             return false;
         }
 
+        private bool ShipCollectsHealth(Health health)
+        {
+            if(ship.DisplayArea.IntersectsWith(health.DisplayArea))
+            {
+                healthMeter += 10;
+                return true;
+            }
+            return false;
+        }
+
 
         private bool AsteroidOffScreen(Asteroid asteroid)
         {
             return asteroid.DisplayArea.Y > this.DisplayRectangle.Bottom;
+        }
+
+        private bool HealthOffScreen(Health health)
+        {
+            return health.DisplayArea.Y > this.DisplayRectangle.Bottom;
         }
 
         private bool BulletOffScreen(Bullet bullet)
@@ -140,7 +173,23 @@ namespace SpaceNavigator
             SolidBrush brush = new SolidBrush(Color.White);
             Point point = new Point(20, 20);
 
-            graphics.DrawString(string.Format(message, health), font, brush, point);
+            graphics.DrawString(string.Format(message, healthMeter), font, brush, point);
+        }
+
+        private void UpdateDistance(Graphics graphics)
+        {
+            string message = "Distance to Finish: {0}";
+
+            Font font = new Font("Comic Sans MS", 16);
+            SolidBrush brush = new SolidBrush(Color.White);
+            Point point = new Point(20, 50);
+
+            graphics.DrawString(string.Format(message, this.DisplayRectangle.Bottom - ship.DisplayArea.Height - (finish.DisplayArea.Y)), font, brush, point);
+        }
+
+        private void HealthTimer_Tick(object sender, EventArgs e)
+        {
+            Healths.Add(new Health(this.DisplayRectangle));
         }
     }
 }
