@@ -13,8 +13,9 @@ namespace SpaceNavigator
     public partial class SpaceNavigatorForm : Form
     {
         Spaceship ship;
-        HashSet<UFO> UFOs = new HashSet<UFO>();
+        HashSet<Asteroid> Asteroids = new HashSet<Asteroid>();
         HashSet<Bullet> Bullets = new HashSet<Bullet>();
+        int health = 1000;
 
         public SpaceNavigatorForm()
         {
@@ -26,25 +27,27 @@ namespace SpaceNavigator
             this.WindowState = FormWindowState.Maximized;
 
             ship = new Spaceship(this.DisplayRectangle);
-            //UFOs.Add(new UFO(this.DisplayRectangle));
+            //Asteroids.Add(new Asteroid(this.DisplayRectangle));
 
             AnimationTimer.Start();
-            UFOTimer.Start();
+            AsteroidTimer.Start();
         }
 
         private void SpaceNavigatorForm_Paint(object sender, PaintEventArgs e)
         {
             ship.Draw(e.Graphics);
 
-            foreach(UFO ufo in UFOs)
+            foreach(Asteroid asteroid in Asteroids)
             {
-                ufo.Draw(e.Graphics);
+                asteroid.Draw(e.Graphics);
             }
 
             foreach(Bullet bullet in Bullets)
             {
                 bullet.Draw(e.Graphics);
             }
+
+            UpdateLifeCount(e.Graphics);
         }
 
         private void SpaceNavigatorForm_KeyDown(object sender, KeyEventArgs e)
@@ -71,11 +74,14 @@ namespace SpaceNavigator
 
         private void AnimationTimer_Tick(object sender, EventArgs e)
         {
-            //UFOs.RemoveWhere(BulletHitsUFO);
+            Asteroids.RemoveWhere(BulletHitsAsteroid);
+            Asteroids.RemoveWhere(AsteroidOffScreen);
+            Bullets.RemoveWhere(BulletOffScreen);
+            CheckForCollisions();
 
-            foreach (UFO ufo in UFOs)
+            foreach (Asteroid asteroid in Asteroids)
             {
-                ufo.Move();
+                asteroid.Move();
             }
 
             foreach(Bullet bullet in Bullets)
@@ -87,15 +93,54 @@ namespace SpaceNavigator
             Invalidate();
         }
 
-        private void UFOTimer_Tick(object sender, EventArgs e)
+        private void CheckForCollisions()
         {
-            UFOs.Add(new UFO(this.DisplayRectangle));
+            foreach(Asteroid asteroid in Asteroids)
+            {
+                if (ship.DisplayArea.IntersectsWith(asteroid.DisplayArea))
+                {
+                    health -= 10;
+                }
+            }
+            
+        }
+
+        private void AsteroidTimer_Tick(object sender, EventArgs e)
+        {
+            Asteroids.Add(new Asteroid(this.DisplayRectangle));
         }
 
 
-        //private bool BulletHitsUFO(Bullet bullet, UFO ufo)
-        //{
-        //    return bullet.DisplayArea.IntersectsWith(ufo.DisplayArea);
-        //}
+        private bool BulletHitsAsteroid(Asteroid asteroid)
+        {
+            foreach(Bullet bullet in Bullets)
+            {
+                return asteroid.DisplayArea.IntersectsWith(bullet.DisplayArea);
+            }
+            return false;
+        }
+
+
+        private bool AsteroidOffScreen(Asteroid asteroid)
+        {
+            return asteroid.DisplayArea.Y > this.DisplayRectangle.Bottom;
+        }
+
+        private bool BulletOffScreen(Bullet bullet)
+        {
+            return bullet.DisplayArea.Y < this.DisplayRectangle.Top;
+        }
+
+
+        private void UpdateLifeCount(Graphics graphics)
+        {
+            string message = "Health: {0}";
+
+            Font font = new Font("Comic Sans MS", 16);
+            SolidBrush brush = new SolidBrush(Color.White);
+            Point point = new Point(20, 20);
+
+            graphics.DrawString(string.Format(message, health), font, brush, point);
+        }
     }
 }

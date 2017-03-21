@@ -35,7 +35,7 @@ namespace SpaceNavigator
             BulletDisplayArea.X = ship.DisplayArea.X + (ship.DisplayArea.Width / 2); //spaceship width / 2;
 
             XVelocity = 0;
-            YVelocity = 30;
+            YVelocity = 20;
 
             image = Image.FromFile(@"images/Bullet.png");
 

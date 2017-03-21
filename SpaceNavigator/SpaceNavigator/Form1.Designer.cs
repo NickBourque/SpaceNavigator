@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
-            this.UFOTimer = new System.Windows.Forms.Timer(this.components);
+            this.AsteroidTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // AnimationTimer
@@ -38,10 +38,10 @@
             this.AnimationTimer.Interval = 16;
             this.AnimationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
             // 
-            // UFOTimer
+            // AsteroidTimer
             // 
-            this.UFOTimer.Interval = 2000;
-            this.UFOTimer.Tick += new System.EventHandler(this.UFOTimer_Tick);
+            this.AsteroidTimer.Interval = 2000;
+            this.AsteroidTimer.Tick += new System.EventHandler(this.AsteroidTimer_Tick);
             // 
             // SpaceNavigatorForm
             // 
@@ -62,7 +62,7 @@
         #endregion
 
         private System.Windows.Forms.Timer AnimationTimer;
-        private System.Windows.Forms.Timer UFOTimer;
+        private System.Windows.Forms.Timer AsteroidTimer;
     }
 }
 
