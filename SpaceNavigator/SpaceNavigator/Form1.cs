@@ -13,6 +13,7 @@ namespace SpaceNavigator
     public partial class SpaceNavigatorForm : Form
     {
         SplashScreen splash;
+        GameOver gameOver;
         Spaceship ship;
         FinishLine finish;
         HashSet<Asteroid> Asteroids = new HashSet<Asteroid>();
@@ -21,6 +22,8 @@ namespace SpaceNavigator
         int healthMeter = 100;
         int asteroidsHit;
         bool running;
+        bool alive = true;
+        int level = 1;
 
         public SpaceNavigatorForm()
         {
@@ -33,6 +36,7 @@ namespace SpaceNavigator
 
 
             splash = new SplashScreen(this.DisplayRectangle);
+            gameOver = new GameOver(this.DisplayRectangle);
             ship = new Spaceship(this.DisplayRectangle);
             finish = new FinishLine(this.DisplayRectangle);
 
@@ -53,17 +57,13 @@ namespace SpaceNavigator
                 AnimationTimer.Stop();
                 AsteroidTimer.Stop();
                 HealthTimer.Stop();
+                Invalidate();
                 return false;
             }
         }
 
         private void SpaceNavigatorForm_Paint(object sender, PaintEventArgs e)
-        {
-            if (!running)
-            {
-                splash.Draw(e.Graphics);
-            }
-            
+        { 
             ship.Draw(e.Graphics);
             finish.Draw(e.Graphics);
 
@@ -82,9 +82,19 @@ namespace SpaceNavigator
                 health.Draw(e.Graphics);
             }
 
+            if (!running)
+            {
+                splash.Draw(e.Graphics);
+            }
+            else if(!alive)
+            {
+                gameOver.Draw(e.Graphics);
+            }
+
             UpdateHealthMeter(e.Graphics);
             UpdateDistance(e.Graphics);
             UpdateAsteroidHitCount(e.Graphics);
+            UpdateLevel(e.Graphics);
         }
 
         private void SpaceNavigatorForm_KeyDown(object sender, KeyEventArgs e)
@@ -121,7 +131,8 @@ namespace SpaceNavigator
             Bullets.RemoveWhere(BulletOffScreen);
             Healths.RemoveWhere(ShipCollectsHealth);
             Healths.RemoveWhere(HealthOffScreen);
-            CheckForCollisions();
+            CheckForAsteroidCollisions();
+            CheckForFinish();
 
             foreach (Asteroid asteroid in Asteroids)
             {
@@ -143,13 +154,27 @@ namespace SpaceNavigator
             Invalidate();
         }
 
-        private void CheckForCollisions()
+        private void CheckForFinish()
+        {
+            if(ship.DisplayArea.IntersectsWith(finish.DisplayArea))
+            {
+                level += 1;
+            }
+        }
+
+        private void CheckForAsteroidCollisions()
         {
             foreach(Asteroid asteroid in Asteroids)
             {
                 if (ship.DisplayArea.IntersectsWith(asteroid.DisplayArea))
                 {
                     healthMeter -= 1;
+
+                    if(healthMeter <= 0)
+                    {
+                        healthMeter = 0;
+                        alive = StartPause();
+                    }
                 }
             }
             
@@ -233,6 +258,18 @@ namespace SpaceNavigator
             Point point = new Point(20, 80);
 
             graphics.DrawString(string.Format(message, asteroidsHit), font, brush, point);
+        }
+
+
+        private void UpdateLevel(Graphics graphics)
+        {
+            string message = "Level: {0}";
+
+            Font font = new Font("Comic Sans MS", 16);
+            SolidBrush brush = new SolidBrush(Color.White);
+            Point point = new Point(this.DisplayRectangle.Right -100, 20);
+
+            graphics.DrawString(string.Format(message, level), font, brush, point);
         }
 
 
