@@ -13,6 +13,7 @@ namespace SpaceNavigator
     public partial class SpaceNavigatorForm : Form
     {
         SplashScreen splash;
+        LevelUp levelUpScreen;
         GameOver gameOver;
         Spaceship ship;
         FinishLine finish;
@@ -24,6 +25,7 @@ namespace SpaceNavigator
         bool running;
         bool alive = true;
         int level = 1;
+        bool levelUp;
 
         public SpaceNavigatorForm()
         {
@@ -36,11 +38,20 @@ namespace SpaceNavigator
 
 
             splash = new SplashScreen(this.DisplayRectangle);
+            levelUpScreen = new LevelUp(this.DisplayRectangle);
             gameOver = new GameOver(this.DisplayRectangle);
             ship = new Spaceship(this.DisplayRectangle);
-            finish = new FinishLine(this.DisplayRectangle);
-
+            finish = new FinishLine(this.DisplayRectangle, ship, level);
             
+        }
+
+        public void LevelUpOrRestart()
+        {
+            finish = new FinishLine(this.DisplayRectangle, ship, level);
+            healthMeter = 100;
+            Asteroids.Clear();
+            Bullets.Clear();
+            Healths.Clear();
         }
 
         public bool StartPause()
@@ -84,7 +95,16 @@ namespace SpaceNavigator
 
             if (!running)
             {
-                splash.Draw(e.Graphics);
+                if (levelUp)
+                {
+                    levelUpScreen.Draw(e.Graphics);
+                    levelUp = false;
+                }
+                else
+                {
+                    splash.Draw(e.Graphics);
+                }
+                
             }
             else if(!alive)
             {
@@ -119,6 +139,20 @@ namespace SpaceNavigator
                 case Keys.Enter:
                     {
                         running = StartPause();
+
+                        if(!alive)
+                        {
+                            //RESET EVERYTHING TO LEVEL 1
+                            level = 1;
+                            LevelUpOrRestart();
+                            alive = true;
+                        }
+                        else if (levelUp)
+                        {
+                            //RESET EVERYTHING TO NEXT LEVEL
+                            LevelUpOrRestart();
+                        }
+
                         break;
                     }
             }
@@ -156,8 +190,10 @@ namespace SpaceNavigator
 
         private void CheckForFinish()
         {
-            if(ship.DisplayArea.IntersectsWith(finish.DisplayArea))
+            //if(ship.DisplayArea.IntersectsWith(finish.DisplayArea))
+            if(ship.DisplayArea.Y <= finish.DisplayArea.Y)
             {
+                levelUp = !StartPause();
                 level += 1;
             }
         }
@@ -245,7 +281,7 @@ namespace SpaceNavigator
             SolidBrush brush = new SolidBrush(Color.White);
             Point point = new Point(20, 50);
 
-            graphics.DrawString(string.Format(message, this.DisplayRectangle.Bottom - ship.DisplayArea.Height - (finish.DisplayArea.Y)), font, brush, point);
+            graphics.DrawString(string.Format(message, ship.DisplayArea.Y - finish.DisplayArea.Y), font, brush, point);
         }
 
 

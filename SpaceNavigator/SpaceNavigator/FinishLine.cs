@@ -27,7 +27,7 @@ namespace SpaceNavigator
         }
 
 
-        public FinishLine(Rectangle gameplayArea)
+        public FinishLine(Rectangle gameplayArea, Spaceship ship, int level)
         {
             this.GameplayArea = gameplayArea;
 
@@ -36,10 +36,13 @@ namespace SpaceNavigator
 
             //set starting location
             FinishLineDisplayArea.X = 0;
-            FinishLineDisplayArea.Y = -10000;
+            FinishLineDisplayArea.Y = ship.DisplayArea.Y - (level * 10000);
+                //ship.DisplayArea.Y - ship.Offset - (level*10000);
+
+            //this.DisplayRectangle.Bottom - ship.DisplayArea.Height - (finish.DisplayArea.Y)
 
             XVelocity = 0;
-            YVelocity = 10;
+            YVelocity = 8;
 
             image = Image.FromFile(@"images/FinishLine.png");
         }

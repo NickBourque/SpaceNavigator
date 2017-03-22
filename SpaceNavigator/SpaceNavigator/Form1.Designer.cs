@@ -41,7 +41,7 @@
             // 
             // AsteroidTimer
             // 
-            this.AsteroidTimer.Interval = 2000;
+            this.AsteroidTimer.Interval = 750;
             this.AsteroidTimer.Tick += new System.EventHandler(this.AsteroidTimer_Tick);
             // 
             // HealthTimer

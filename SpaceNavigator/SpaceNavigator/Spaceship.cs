@@ -12,6 +12,8 @@ namespace SpaceNavigator
         private readonly int ShipHeight = 60;
         private readonly int ShipWidth = 40;
 
+        private int ShipOffset = 75;
+
         private Rectangle ShipDisplayArea;
         private Rectangle GameplayArea;
 
@@ -24,13 +26,18 @@ namespace SpaceNavigator
             get { return this.ShipDisplayArea; }
         }
 
+        public int Offset
+        {
+            get { return this.ShipOffset; }
+        }
+
 
         public Spaceship(Rectangle GameplayArea)
         {
             ShipDisplayArea.Height = ShipHeight;
             ShipDisplayArea.Width = ShipWidth;
 
-            ShipDisplayArea.Y = GameplayArea.Bottom - 75;
+            ShipDisplayArea.Y = GameplayArea.Bottom - ShipOffset;
             ShipDisplayArea.X = (GameplayArea.Width / 2) - (ShipWidth / 2);
 
             image = Image.FromFile(@"images/Spaceship.png");
