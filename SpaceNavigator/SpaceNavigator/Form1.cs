@@ -12,12 +12,15 @@ namespace SpaceNavigator
 {
     public partial class SpaceNavigatorForm : Form
     {
+        SplashScreen splash;
         Spaceship ship;
         FinishLine finish;
         HashSet<Asteroid> Asteroids = new HashSet<Asteroid>();
         HashSet<Bullet> Bullets = new HashSet<Bullet>();
         HashSet<Health> Healths = new HashSet<Health>();
         int healthMeter = 100;
+        int asteroidsHit;
+        bool running;
 
         public SpaceNavigatorForm()
         {
@@ -28,16 +31,39 @@ namespace SpaceNavigator
         {
             this.WindowState = FormWindowState.Maximized;
 
+
+            splash = new SplashScreen(this.DisplayRectangle);
             ship = new Spaceship(this.DisplayRectangle);
             finish = new FinishLine(this.DisplayRectangle);
 
-            AnimationTimer.Start();
-            AsteroidTimer.Start();
-            HealthTimer.Start();
+            
+        }
+
+        public bool StartPause()
+        {
+            if(!running)
+            {
+                AnimationTimer.Start();
+                AsteroidTimer.Start();
+                HealthTimer.Start();
+                return true;
+            }
+            else
+            {
+                AnimationTimer.Stop();
+                AsteroidTimer.Stop();
+                HealthTimer.Stop();
+                return false;
+            }
         }
 
         private void SpaceNavigatorForm_Paint(object sender, PaintEventArgs e)
         {
+            if (!running)
+            {
+                splash.Draw(e.Graphics);
+            }
+            
             ship.Draw(e.Graphics);
             finish.Draw(e.Graphics);
 
@@ -56,8 +82,9 @@ namespace SpaceNavigator
                 health.Draw(e.Graphics);
             }
 
-            UpdateLifeCount(e.Graphics);
+            UpdateHealthMeter(e.Graphics);
             UpdateDistance(e.Graphics);
+            UpdateAsteroidHitCount(e.Graphics);
         }
 
         private void SpaceNavigatorForm_KeyDown(object sender, KeyEventArgs e)
@@ -77,6 +104,11 @@ namespace SpaceNavigator
                 case Keys.Space:
                     {
                         Bullets.Add(new Bullet(this.DisplayRectangle, ship));
+                        break;
+                    }
+                case Keys.Enter:
+                    {
+                        running = StartPause();
                         break;
                     }
             }
@@ -133,7 +165,11 @@ namespace SpaceNavigator
         {
             foreach(Bullet bullet in Bullets)
             {
-                return asteroid.DisplayArea.IntersectsWith(bullet.DisplayArea);
+                if(asteroid.DisplayArea.IntersectsWith(bullet.DisplayArea))
+                {
+                    asteroidsHit += 1;
+                    return true;
+                }
             }
             return false;
         }
@@ -165,7 +201,7 @@ namespace SpaceNavigator
         }
 
 
-        private void UpdateLifeCount(Graphics graphics)
+        private void UpdateHealthMeter(Graphics graphics)
         {
             string message = "Health: {0}";
 
@@ -178,7 +214,7 @@ namespace SpaceNavigator
 
         private void UpdateDistance(Graphics graphics)
         {
-            string message = "Distance to Finish: {0}";
+            string message = "Distance to Finish: {0} m";
 
             Font font = new Font("Comic Sans MS", 16);
             SolidBrush brush = new SolidBrush(Color.White);
@@ -186,6 +222,19 @@ namespace SpaceNavigator
 
             graphics.DrawString(string.Format(message, this.DisplayRectangle.Bottom - ship.DisplayArea.Height - (finish.DisplayArea.Y)), font, brush, point);
         }
+
+
+        private void UpdateAsteroidHitCount(Graphics graphics)
+        {
+            string message = "Asteroids Destroyed: {0}";
+
+            Font font = new Font("Comic Sans MS", 16);
+            SolidBrush brush = new SolidBrush(Color.White);
+            Point point = new Point(20, 80);
+
+            graphics.DrawString(string.Format(message, asteroidsHit), font, brush, point);
+        }
+
 
         private void HealthTimer_Tick(object sender, EventArgs e)
         {
