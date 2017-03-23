@@ -50,7 +50,7 @@ namespace SpaceNavigator
         public void LevelUpOrRestart()
         {
             finish = new FinishLine(this.DisplayRectangle, ship, level);
-            healthMeter = 100;
+            //healthMeter = 100;
             Asteroids.Clear();
             Bullets.Clear();
             Healths.Clear();
@@ -98,7 +98,6 @@ namespace SpaceNavigator
             if (levelUp)
             {
                 levelUpScreen.Draw(e.Graphics);
-                //levelUp = false;
                 LevelUpOrRestart();
             }
             else if (!levelUp && !running)
@@ -129,7 +128,6 @@ namespace SpaceNavigator
                         {
                             KeyList.Add(Keys.Left);
                         }
-                        //ship.Move(Spaceship.Direction.Left);
                         break;
                     }
                 case Keys.Right:
@@ -138,7 +136,6 @@ namespace SpaceNavigator
                         {
                             KeyList.Add(Keys.Right);
                         }
-                        //ship.Move(Spaceship.Direction.Right);
                         break;
                     }
                 case Keys.Space:
@@ -147,7 +144,6 @@ namespace SpaceNavigator
                         {
                             KeyList.Add(Keys.Space);
                         }
-                        //Bullets.Add(new Bullet(this.DisplayRectangle, ship));
                         break;
                     }
                 case Keys.Enter:
@@ -163,6 +159,7 @@ namespace SpaceNavigator
                             level = 1;
                             LevelUpOrRestart();
                             asteroidsHit = 0;
+                            healthMeter = 100;
                             alive = true;
                         }
                         else if (levelUp)
@@ -230,7 +227,6 @@ namespace SpaceNavigator
 
         private void CheckForFinish()
         {
-            //if(ship.DisplayArea.IntersectsWith(finish.DisplayArea))
             if(ship.DisplayArea.Y <= finish.DisplayArea.Y)
             {
                 levelUp = !StartPause();
@@ -366,7 +362,6 @@ namespace SpaceNavigator
                         {
                             KeyList.Remove(Keys.Left);
                         }
-                        //ship.Move(Spaceship.Direction.Left);
                         break;
                     }
                 case Keys.Right:
@@ -375,7 +370,6 @@ namespace SpaceNavigator
                         {
                             KeyList.Remove(Keys.Right);
                         }
-                        //ship.Move(Spaceship.Direction.Right);
                         break;
                     }
                 case Keys.Space:
@@ -384,7 +378,6 @@ namespace SpaceNavigator
                         {
                             KeyList.Remove(Keys.Space);
                         }
-                        //Bullets.Add(new Bullet(this.DisplayRectangle, ship));
                         break;
                     }
             }

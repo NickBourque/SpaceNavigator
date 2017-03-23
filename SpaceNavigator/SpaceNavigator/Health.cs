@@ -35,7 +35,7 @@ namespace SpaceNavigator
             HealthDisplayArea.Height = HealthHeight;
             HealthDisplayArea.Width = HealthWidth;
 
-            //set starting location
+            //set starting location and velocity
             HealthDisplayArea.X = random.Next(GameplayArea.X, GameplayArea.Right);
             HealthDisplayArea.Y = random.Next(GameplayArea.Y - 60, GameplayArea.Y - 40);
 

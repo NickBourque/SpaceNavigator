@@ -48,11 +48,6 @@ namespace SpaceNavigator
 
         public void Draw(Graphics graphics)
         {
-            //using (SolidBrush brush = new SolidBrush(Color.Orange))
-            //{
-            //    graphics.FillRectangle(brush, ShipDisplayArea);
-            //}
-
             graphics.DrawImage(image, ShipDisplayArea);
         }
 
@@ -69,9 +64,7 @@ namespace SpaceNavigator
                     }
                 case Direction.Right:
                     {
-
                         ShipDisplayArea.X = (ShipDisplayArea.X >= GameplayArea.Right - ShipWidth) ? GameplayArea.Right - ShipWidth : ShipDisplayArea.X += 20;
-                        
                         break;
                     }
             }

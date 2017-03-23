@@ -36,7 +36,7 @@ namespace SpaceNavigator
             AsteroidDisplayArea.Height = AsteroidHeight;
             AsteroidDisplayArea.Width = AsteroidWidth;
 
-            //set starting location
+            //set starting location and velocity
             AsteroidDisplayArea.X = random.Next(GameplayArea.X, GameplayArea.Right);
             AsteroidDisplayArea.Y = random.Next(GameplayArea.Y - 60, GameplayArea.Y - 40);
 

@@ -34,13 +34,9 @@ namespace SpaceNavigator
             FinishLineDisplayArea.Height = FinishLineHeight;
             FinishLineDisplayArea.Width = FinishLineWidth;
 
-            //set starting location
+            //set starting location and velocity
             FinishLineDisplayArea.X = 0;
             FinishLineDisplayArea.Y = ship.DisplayArea.Y - (level * 10000);
-                //ship.DisplayArea.Y - ship.Offset - (level*10000);
-
-            //this.DisplayRectangle.Bottom - ship.DisplayArea.Height - (finish.DisplayArea.Y)
-
             XVelocity = 0;
             YVelocity = 8;
 

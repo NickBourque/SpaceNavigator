@@ -31,8 +31,8 @@ namespace SpaceNavigator
             BulletDisplayArea.Height = BulletHeight;
             BulletDisplayArea.Width = BulletWidth;
 
-            BulletDisplayArea.Y = ship.DisplayArea.Y; //y of spaceship;
-            BulletDisplayArea.X = ship.DisplayArea.X + (ship.DisplayArea.Width / 2); //spaceship width / 2;
+            BulletDisplayArea.Y = ship.DisplayArea.Y;
+            BulletDisplayArea.X = ship.DisplayArea.X + (ship.DisplayArea.Width / 2);
 
             XVelocity = 0;
             YVelocity = 20;
