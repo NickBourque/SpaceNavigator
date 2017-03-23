@@ -62,6 +62,8 @@
             this.Load += new System.EventHandler(this.SpaceNavigatorForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.SpaceNavigatorForm_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SpaceNavigatorForm_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SpaceNavigatorForm_KeyPress);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SpaceNavigatorForm_KeyUp);
             this.ResumeLayout(false);
 
         }

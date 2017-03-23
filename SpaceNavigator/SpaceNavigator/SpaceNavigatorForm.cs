@@ -27,6 +27,8 @@ namespace SpaceNavigator
         int level = 1;
         bool levelUp;
 
+        List<Keys> KeyList = new List<Keys>();
+
         public SpaceNavigatorForm()
         {
             InitializeComponent();
@@ -74,10 +76,10 @@ namespace SpaceNavigator
         }
 
         private void SpaceNavigatorForm_Paint(object sender, PaintEventArgs e)
-        { 
-            ship.Draw(e.Graphics);
+        {
             finish.Draw(e.Graphics);
-
+            ship.Draw(e.Graphics);
+            
             foreach(Asteroid asteroid in Asteroids)
             {
                 asteroid.Draw(e.Graphics);
@@ -123,17 +125,29 @@ namespace SpaceNavigator
             {
                 case Keys.Left:
                     {
-                        ship.Move(Spaceship.Direction.Left);
+                        if (!KeyList.Contains(Keys.Left))
+                        {
+                            KeyList.Add(Keys.Left);
+                        }
+                        //ship.Move(Spaceship.Direction.Left);
                         break;
                     }
                 case Keys.Right:
                     {
-                        ship.Move(Spaceship.Direction.Right);
+                        if (!KeyList.Contains(Keys.Right))
+                        {
+                            KeyList.Add(Keys.Right);
+                        }
+                        //ship.Move(Spaceship.Direction.Right);
                         break;
                     }
                 case Keys.Space:
                     {
-                        Bullets.Add(new Bullet(this.DisplayRectangle, ship));
+                        if (!KeyList.Contains(Keys.Space))
+                        {
+                            KeyList.Add(Keys.Space);
+                        }
+                        //Bullets.Add(new Bullet(this.DisplayRectangle, ship));
                         break;
                     }
                 case Keys.Enter:
@@ -167,6 +181,25 @@ namespace SpaceNavigator
 
         private void AnimationTimer_Tick(object sender, EventArgs e)
         {
+            if(KeyList.Contains(Keys.Left))
+            {
+                ship.Move(Spaceship.Direction.Left);
+            }
+
+            if (KeyList.Contains(Keys.Right))
+            {
+                ship.Move(Spaceship.Direction.Right);
+            }
+
+            if (KeyList.Contains(Keys.Space))
+            {
+                if (Bullets.Count < 1)
+                {
+                    Bullets.Add(new Bullet(this.DisplayRectangle, ship));
+                }
+            }
+
+
             Asteroids.RemoveWhere(BulletHitsAsteroid);
             Asteroids.RemoveWhere(AsteroidOffScreen);
             Bullets.RemoveWhere(BulletOffScreen);
@@ -320,6 +353,45 @@ namespace SpaceNavigator
         private void HealthTimer_Tick(object sender, EventArgs e)
         {
             Healths.Add(new Health(this.DisplayRectangle));
+        }
+
+        private void SpaceNavigatorForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyData)
+            {
+                case Keys.Left:
+                    {
+                        if (KeyList.Contains(Keys.Left))
+                        {
+                            KeyList.Remove(Keys.Left);
+                        }
+                        //ship.Move(Spaceship.Direction.Left);
+                        break;
+                    }
+                case Keys.Right:
+                    {
+                        if (KeyList.Contains(Keys.Right))
+                        {
+                            KeyList.Remove(Keys.Right);
+                        }
+                        //ship.Move(Spaceship.Direction.Right);
+                        break;
+                    }
+                case Keys.Space:
+                    {
+                        if (KeyList.Contains(Keys.Space))
+                        {
+                            KeyList.Remove(Keys.Space);
+                        }
+                        //Bullets.Add(new Bullet(this.DisplayRectangle, ship));
+                        break;
+                    }
+            }
+        }
+
+        private void SpaceNavigatorForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
         }
     }
 }

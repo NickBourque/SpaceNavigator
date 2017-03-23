@@ -48,11 +48,11 @@
   <ItemGroup>
     <Compile Include="Bullet.cs" />
     <Compile Include="FinishLine.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="SpaceNavigatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="SpaceNavigatorForm.Designer.cs">
+      <DependentUpon>SpaceNavigatorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GameOver.cs" />
     <Compile Include="Health.cs" />
@@ -62,8 +62,8 @@
     <Compile Include="Spaceship.cs" />
     <Compile Include="Asteroid.cs" />
     <Compile Include="SplashScreen.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="SpaceNavigatorForm.resx">
+      <DependentUpon>SpaceNavigatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
