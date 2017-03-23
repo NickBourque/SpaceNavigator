@@ -281,6 +281,7 @@ namespace SpaceNavigator
             if(ship.DisplayArea.IntersectsWith(health.DisplayArea))
             {
                 healthMeter += 10;
+                healthMeter = (healthMeter > 100) ? healthMeter = 100 : healthMeter;
                 return true;
             }
             return false;
@@ -311,7 +312,7 @@ namespace SpaceNavigator
             SolidBrush brush = new SolidBrush(Color.White);
             Point point = new Point(20, 20);
 
-            graphics.DrawString(string.Format(message, healthMeter), font, brush, point);
+            graphics.DrawString(string.Format(message, healthMeter + "%"), font, brush, point);
         }
 
         private void UpdateDistance(Graphics graphics)
@@ -389,9 +390,5 @@ namespace SpaceNavigator
             }
         }
 
-        private void SpaceNavigatorForm_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
     }
 }
