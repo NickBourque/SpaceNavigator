@@ -93,17 +93,17 @@ namespace SpaceNavigator
                 health.Draw(e.Graphics);
             }
 
-            if (!running)
+            if (levelUp)
             {
-                if (levelUp)
-                {
-                    levelUpScreen.Draw(e.Graphics);
-                    levelUp = false;
-                }
-                else
-                {
-                    splash.Draw(e.Graphics);
-                }
+                levelUpScreen.Draw(e.Graphics);
+                //levelUp = false;
+                LevelUpOrRestart();
+            }
+            else if (!levelUp && !running)
+            {
+                
+                splash.Draw(e.Graphics);
+                
                 
             }
             else if(!alive)
@@ -138,19 +138,26 @@ namespace SpaceNavigator
                     }
                 case Keys.Enter:
                     {
-                        running = StartPause();
+                        if (!levelUp)
+                        {
+                            running = StartPause();
+                        }
 
                         if(!alive)
                         {
                             //RESET EVERYTHING TO LEVEL 1
                             level = 1;
                             LevelUpOrRestart();
+                            asteroidsHit = 0;
                             alive = true;
                         }
                         else if (levelUp)
                         {
                             //RESET EVERYTHING TO NEXT LEVEL
                             LevelUpOrRestart();
+                            levelUp = false;
+                            running = false;
+                            running = StartPause();
                         }
 
                         break;
@@ -228,6 +235,7 @@ namespace SpaceNavigator
             {
                 if(asteroid.DisplayArea.IntersectsWith(bullet.DisplayArea))
                 {
+                    Bullets.Remove(bullet);
                     asteroidsHit += 1;
                     return true;
                 }
