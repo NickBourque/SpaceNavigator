@@ -41,12 +41,12 @@
             // 
             // AsteroidTimer
             // 
-            this.AsteroidTimer.Interval = 750;
+            this.AsteroidTimer.Interval = 400;
             this.AsteroidTimer.Tick += new System.EventHandler(this.AsteroidTimer_Tick);
             // 
             // HealthTimer
             // 
-            this.HealthTimer.Interval = 20000;
+            this.HealthTimer.Interval = 7500;
             this.HealthTimer.Tick += new System.EventHandler(this.HealthTimer_Tick);
             // 
             // SpaceNavigatorForm
