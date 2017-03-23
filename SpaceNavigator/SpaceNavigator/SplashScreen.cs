@@ -2,6 +2,9 @@
 
 namespace SpaceNavigator
 {
+    /// <summary>
+    /// The splash screen for the game.
+    /// </summary>
     class SplashScreen
     {
         private readonly int SplashHeight = 524;
@@ -12,7 +15,10 @@ namespace SpaceNavigator
 
         private Image image;
 
-
+        /// <summary>
+        /// Constructor for the splash screen.
+        /// </summary>
+        /// <param name="GameplayArea">The windows form area.</param>
         public SplashScreen(Rectangle GameplayArea)
         {
             SplashDisplayArea.Height = SplashHeight;
@@ -26,6 +32,10 @@ namespace SpaceNavigator
             this.GameplayArea = GameplayArea;
         }
 
+        /// <summary>
+        /// Draws the splash screen image.
+        /// </summary>
+        /// <param name="graphics"></param>
         public void Draw(Graphics graphics)
         {
             graphics.DrawImage(image, SplashDisplayArea);

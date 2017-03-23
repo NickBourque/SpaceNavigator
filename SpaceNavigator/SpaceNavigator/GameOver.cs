@@ -2,6 +2,9 @@
 
 namespace SpaceNavigator
 {
+    /// <summary>
+    /// The Game Over Screen.
+    /// </summary>
     class GameOver
     {
         private readonly int GameOverHeight = 524;
@@ -12,7 +15,10 @@ namespace SpaceNavigator
 
         private Image image;
 
-
+        /// <summary>
+        /// Constructor for the Game Over Screen.
+        /// </summary>
+        /// <param name="GameplayArea"></param>
         public GameOver(Rectangle GameplayArea)
         {
             GameOverDisplayArea.Height = GameOverHeight;
@@ -26,6 +32,10 @@ namespace SpaceNavigator
             this.GameplayArea = GameplayArea;
         }
 
+        /// <summary>
+        /// Draws the Game Over Screen.
+        /// </summary>
+        /// <param name="graphics">A Graphics object.</param>
         public void Draw(Graphics graphics)
         {
             graphics.DrawImage(image, GameOverDisplayArea);

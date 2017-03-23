@@ -2,6 +2,9 @@
 
 namespace SpaceNavigator
 {
+    /// <summary>
+    /// A spaceship controlled by the player.
+    /// </summary>
     class Spaceship
     {
         private readonly int ShipHeight = 60;
@@ -14,19 +17,23 @@ namespace SpaceNavigator
 
         private Image image;
 
+        /// <summary>
+        /// A Direction object used to give the spaceship left and right movements.
+        /// </summary>
         public enum Direction { Left, Right }
 
+        /// <summary>
+        /// Gets the ship's display area.
+        /// </summary>
         public Rectangle DisplayArea
         {
             get { return this.ShipDisplayArea; }
         }
 
-        public int Offset
-        {
-            get { return this.ShipOffset; }
-        }
-
-
+        /// <summary>
+        /// Constructor for the spaceship object.
+        /// </summary>
+        /// <param name="GameplayArea">The Windows Form area.</param>
         public Spaceship(Rectangle GameplayArea)
         {
             ShipDisplayArea.Height = ShipHeight;
@@ -40,13 +47,19 @@ namespace SpaceNavigator
             this.GameplayArea = GameplayArea;
         }
 
-
+        /// <summary>
+        /// Draws the Spaceship.
+        /// </summary>
+        /// <param name="graphics">A Graphics object.</param>
         public void Draw(Graphics graphics)
         {
             graphics.DrawImage(image, ShipDisplayArea);
         }
 
-
+        /// <summary>
+        /// Moves the spaceship left and right.
+        /// </summary>
+        /// <param name="direction">A Direction object; either left or right.</param>
         public void Move(Direction direction)
         {
             switch(direction)

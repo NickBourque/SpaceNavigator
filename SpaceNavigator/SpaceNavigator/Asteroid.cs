@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace SpaceNavigator
 {
+    /// <summary>
+    /// Asteroids used in game-play.
+    /// </summary>
     class Asteroid
     {
         private readonly int AsteroidHeight = 100;
@@ -18,13 +21,18 @@ namespace SpaceNavigator
         private Random random2 = new Random();
         private Image image;
 
-
+        /// <summary>
+        /// Gets the Asteroid's display area.
+        /// </summary>
         public Rectangle DisplayArea
         {
             get { return this.AsteroidDisplayArea; }
         }
 
-
+        /// <summary>
+        /// Constructor for Asteroid objects.
+        /// </summary>
+        /// <param name="gameplayArea">The Windows Form area.</param>
         public Asteroid(Rectangle gameplayArea)
         {
             this.GameplayArea = gameplayArea;
@@ -42,13 +50,19 @@ namespace SpaceNavigator
             image = Image.FromFile(@"images/Asteroid.png");
         }
 
-
+        /// <summary>
+        /// Moves the asteroid.
+        /// </summary>
         public void Move()
         {
             AsteroidDisplayArea.X += XVelocity;
             AsteroidDisplayArea.Y += YVelocity;
         }
 
+        /// <summary>
+        /// Draws the asteroid.
+        /// </summary>
+        /// <param name="graphics">A Graphics object.</param>
         public void Draw(Graphics graphics)
         {
             graphics.DrawImage(image, AsteroidDisplayArea);

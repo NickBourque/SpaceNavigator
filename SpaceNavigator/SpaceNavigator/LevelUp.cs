@@ -2,6 +2,9 @@
 
 namespace SpaceNavigator
 {
+    /// <summary>
+    /// The level up message seen when passing to the next level.
+    /// </summary>
     class LevelUp
     {
         private readonly int LevelUpHeight = 97;
@@ -12,7 +15,10 @@ namespace SpaceNavigator
 
         private Image image;
 
-
+        /// <summary>
+        /// Constructor for the Level Up object.
+        /// </summary>
+        /// <param name="GameplayArea">The Windows Form area.</param>
         public LevelUp(Rectangle GameplayArea)
         {
             LevelUpDisplayArea.Height = LevelUpHeight;
@@ -26,6 +32,10 @@ namespace SpaceNavigator
             this.GameplayArea = GameplayArea;
         }
 
+        /// <summary>
+        /// Draws the Level Up screen.
+        /// </summary>
+        /// <param name="graphics"></param>
         public void Draw(Graphics graphics)
         {
             graphics.DrawImage(image, LevelUpDisplayArea);

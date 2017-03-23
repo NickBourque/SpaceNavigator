@@ -2,6 +2,9 @@
 
 namespace SpaceNavigator
 {
+    /// <summary>
+    /// The bullets used in game-play.
+    /// </summary>
     class Bullet
     {
         private readonly int BulletHeight = 10;
@@ -15,12 +18,19 @@ namespace SpaceNavigator
 
         private Image image;
 
+        /// <summary>
+        /// Gets the Bullet's display area.
+        /// </summary>
         public Rectangle DisplayArea
         {
             get { return this.BulletDisplayArea; }
         }
 
-
+        /// <summary>
+        /// Constructor for Bullet objects.
+        /// </summary>
+        /// <param name="GameplayArea">The Windows Form area.</param>
+        /// <param name="ship">The Spaceship object.</param>
         public Bullet(Rectangle GameplayArea, Spaceship ship)
         {
             BulletDisplayArea.Height = BulletHeight;
@@ -37,13 +47,19 @@ namespace SpaceNavigator
             this.GameplayArea = GameplayArea;
         }
 
-
+        /// <summary>
+        /// Moves the bullet.
+        /// </summary>
         public void Move()
         {
             BulletDisplayArea.X += XVelocity;
             BulletDisplayArea.Y -= YVelocity;
         }
 
+        /// <summary>
+        /// Draws the bullet.
+        /// </summary>
+        /// <param name="graphics">A Graphics object.</param>
         public void Draw(Graphics graphics)
         {
             graphics.DrawImage(image, BulletDisplayArea);
