@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpaceNavigatorForm));
             this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
             this.AsteroidTimer = new System.Windows.Forms.Timer(this.components);
             this.HealthTimer = new System.Windows.Forms.Timer(this.components);
@@ -57,6 +58,7 @@
             this.BackgroundImage = global::SpaceNavigator.Properties.Resources.Stars;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SpaceNavigatorForm";
             this.Text = "Space Navigator";
             this.Load += new System.EventHandler(this.SpaceNavigatorForm_Load);
